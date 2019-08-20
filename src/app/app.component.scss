@@ -1,9 +1,12 @@
 .container {
-  width: 100%;
   box-sizing: border-box;
-  text-align: center;
+  margin: auto;
+  justify-content: center;
+  .row {
+    justify-content: center;
+  }
 }
 
 main {
-  position: relative;
+  margin-top: 15vh;
 }

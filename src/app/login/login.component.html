@@ -1,1 +1,52 @@
-<p>login works!</p>
+<div class="row">
+  <h4>Login</h4>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col xs-12">
+      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="row">
+          <div class="col-xs-12 col-md-12 form-group">
+            <label for="username"> Username </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              ngModel
+              email
+              required
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-12 form-group">
+            <label for="password"> Password </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              ngModel
+              required
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <div>
+          <button class="btn btn-primary" type="submit">
+            {{ loginMode ? "Login" : "Sign Up" }}
+          </button>
+          &nbsp;|&nbsp;
+          <button
+            class="btn btn-primary toggleLoginButton"
+            type="button"
+            (click)="toggleMode()"
+          >
+            Switch to {{ !loginMode ? "Login" : "Sign Up" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

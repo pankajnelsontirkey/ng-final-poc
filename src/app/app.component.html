@@ -3,8 +3,14 @@
   <app-header></app-header>
 
   <!-- Main Content will go here -->
-  <main>
-    <router-outlet></router-outlet>
+  <main id="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- Footer Component goes here. Loads only when logged in. -->
