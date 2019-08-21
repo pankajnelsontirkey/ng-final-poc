@@ -4,6 +4,7 @@ export interface LoginModel {
 }
 
 export interface UserModel {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -23,6 +24,5 @@ export interface EmployeeModel {
 export interface CurrentUserModel {
   fullName: string;
   email: string;
-  role: string;
   expirationTimer: number;
 }

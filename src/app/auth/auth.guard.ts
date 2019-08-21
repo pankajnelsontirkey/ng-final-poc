@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   CanActivate,
   CanActivateChild,
@@ -6,37 +6,37 @@ import {
   RouterStateSnapshot,
   UrlTree,
   Router
-} from "@angular/router";
-import { Observable } from "rxjs";
-import { AuthService } from "./auth.service";
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
+import { take, map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private router: Router) {}
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    if (this.authService.loggedIn) {
-      return true;
-    } else {
-      return this.router.createUrlTree(["/login"]);
-    }
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.authService.user.pipe(
+      take(1),
+      map(user => {
+        console.log('auth-guard', user);
+        if (!!user) {
+          return true;
+        } else {
+          return this.router.createUrlTree(['/login']);
+        }
+      })
+    );
   }
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return true;
   }
 }

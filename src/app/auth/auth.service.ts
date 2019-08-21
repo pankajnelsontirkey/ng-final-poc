@@ -1,72 +1,77 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { tap, map } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { tap, catchError, map } from 'rxjs/operators';
+// import { uuidv4 } from 'uuid/v4'; /* Using v4 of uuid - gives random id */
 
-import { environment } from "../../environments/environment";
-import { UserModel, LoginModel, CurrentUserModel } from "../shared/models";
-import { compileNgModule } from "@angular/compiler";
+import { environment } from '../../environments/environment';
+import { UserModel, LoginModel } from '../shared/models';
+import { BehaviorSubject } from 'rxjs';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private isLoggedIn: boolean = false;
-  private currentUser: CurrentUserModel = null;
+  public user = new BehaviorSubject<UserModel>(null);
 
   constructor(private http: HttpClient) {}
 
-  // Login for both admin & users
+  /* Login for both admin & users */
   login(loginData: LoginModel) {
-    this.authenticateUser(loginData).subscribe(res => {});
-  }
-
-  // Add user can only be done by admin
-  adduser(user: UserModel) {
     return this.http
-      .post(`${environment.jsonSvURL}${environment.employeesCollection}`, user)
+      .get<UserModel[]>(`${environment.jsonSvURL}${environment.usersCollection}`)
       .pipe(
-        tap(responseData => {
-          console.log(responseData);
-        })
-      );
-  }
-
-  private authenticateUser(loginData: LoginModel) {
-    return this.http
-      .get(`${environment.jsonSvURL}${environment.usersCollection}`)
-      .pipe(
-        tap(usersList => {
-          console.log(loginData);
-          console.log(usersList);
-
-          for (let user in usersList) {
-            console.log(user["email"], loginData.email);
-
-            // if (user["email"] === loginData.email) {
-            //   console.log("Email found!");
-            //   if (user["passwrod"] === loginData.password) {
-            //     console.log("Password Match!");
-            //     break;
-            //   }
-            // } else {
-            //   console.log("Email not found");
-            // }
+        map(usersList => {
+          let loginError: string = null;
+          for (let user of usersList) {
+            if (user['email'] !== loginData.email) {
+              // Case: Email not found in users database
+              loginError = 'Email not found.';
+            } else {
+              if (user['password'] !== loginData.password) {
+                // Case: Email found BUT Password incorrect
+                loginError = 'Invalid Password.';
+                return user;
+              } else {
+                // Case: Email found && Password correct
+                loginError = null;
+                this.handleAuthentication(user);
+                break;
+              }
+            }
+          }
+          if (loginError) {
+            console.log(loginError);
           }
         })
       );
   }
 
-  // Getter to check whether logged in or not.
-  get loggedIn() {
-    return this.isLoggedIn;
+  logout() {
+    /* Remove user from localstorage */
+    localStorage.removeItem('currentUser');
+    /* Set user to null */
+    this.user.next(null);
   }
 
-  set user(user) {
-    // Add code to add expiration, etc to user
-    this.currentUser = user;
+  autoLogin() {
+    let localUser = JSON.parse(localStorage.getItem('currentUser'));
+    let user;
+    this.user.next;
   }
 
-  get user() {
-    return this.currentUser;
+  /**
+   * After successful login, set username, role, token, etc of current logged-in user.
+   **/
+  private handleAuthentication(user: UserModel) {
+    /** Adding role key to user is required! Since user is private to auth service, it can safely hold role.  */
+    this.user.next(user);
+
+    /** Using a temporary localUser that will be set to localStorage; it should not store user 'role' */
+    let localUser = {
+      email: user.email,
+      fullName: `${user.firstName} ${user.lastName}`,
+      expirationTimer: Date.now() + 3600
+    };
+
+    /* Setting user in local storage */
+    localStorage.setItem('currentUser', JSON.stringify(localUser));
   }
-  // Method to manage login (add tokens, generate expiration, etc.)
-  /* manageLogin() {} */
 }

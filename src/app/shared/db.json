@@ -1,16 +1,18 @@
 {
   "users": [
     {
-      "fullName": "Pankaj Nelson Tirkey",
+      "firstName": "Pankaj Nelson",
+      "lastName": "Tirkey",
       "email": "pankajnelsontirkey@gmail.com",
       "password": "adminpassword",
       "role": "admin"
     },
     {
-      "fullName": "Apoorva Singh",
+      "firstName": "Apoorva",
+      "lastName": "Singh",
       "email": "apoorvasingh@gmail.com",
       "password": "hrpassword",
-      "role": "hr"
+      "role": "user"
     }
   ],
   "employees": []
