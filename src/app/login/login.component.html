@@ -1,67 +1,66 @@
 <div class="row">
   <h4>Login</h4>
 </div>
-<span class="help-block" *ngIf="">
+<!-- <span class="help-block" *ngIf="">
   <p>{{ this.error }}</p>
-</span>
-<div class="container">
-  <div class="row">
-    <div class="col xs-12">
-      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <div class="row">
-          <div class="col-xs-12 col-md-12 form-group">
-            <label for="email"> Email </label>
-            <input
-              type="text"
-              name="email"
-              id="email"
-              placeholder="email@domain.com"
-              ngModel
-              email
-              required
-              #email="ngModel"
-              class="form-control"
-            />
-            <div class="help-block" *ngIf="email.touched && !email.valid">
-              Email is required.
-            </div>
+</span> -->
+
+<div class="row">
+  <div class="col-xs-12">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="row">
+        <div class="col-xs-12 col-md-12 form-group">
+          <label for="email"> Email </label>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="email@domain.com"
+            ngModel
+            email
+            required
+            #email="ngModel"
+            class="form-control"
+          />
+          <div class="help-block" *ngIf="email.touched && !email.valid">
+            Email is required.
           </div>
         </div>
+      </div>
 
-        <div class="row">
-          <div class="col-xs-12 col-md-12 form-group">
-            <label for="password"> Password </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="password (min 6 characters)"
-              ngModel
-              required
-              minlength="6"
-              #password="ngModel"
-              class="form-control"
-            />
-            <div class="help-block" *ngIf="password.touched && !password.valid">
-              Password is invalid
-            </div>
+      <div class="row">
+        <div class="col-xs-12 form-group">
+          <label for="password"> Password </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="password (min 6 characters)"
+            ngModel
+            required
+            minlength="6"
+            #password="ngModel"
+            class="form-control"
+          />
+          <div class="help-block" *ngIf="password.touched && !password.valid">
+            Password is invalid
           </div>
         </div>
+      </div>
 
-        <div>
-          <button class="btn btn-primary" type="submit">
-            {{ loginMode ? "Login" : "Sign Up" }}
-          </button>
-          &nbsp;|&nbsp;
-          <button
-            class="btn btn-primary toggleLoginButton"
-            type="button"
-            (click)="toggleMode()"
-          >
-            Switch to {{ !loginMode ? "Login" : "Sign Up" }}
-          </button>
-        </div>
-      </form>
-    </div>
+      <div>
+        <button class="btn btn-primary" type="submit">
+          {{ loginMode ? "Login" : "Sign Up" }}
+        </button>
+        &nbsp;|&nbsp;
+        <button
+          class="btn btn-primary toggleLoginButton"
+          type="button"
+          (click)="toggleMode()"
+        >
+          Switch to {{ !loginMode ? "Login" : "Sign Up" }}
+        </button>
+      </div>
+    </form>
   </div>
 </div>

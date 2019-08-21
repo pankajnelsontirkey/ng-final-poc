@@ -1,18 +1,16 @@
-<div class="container">
-  <!-- Header Component goes here. Loads only when logged in. -->
-  <app-header></app-header>
+<!-- Header Component goes here. Loads only when logged in. -->
+<app-header></app-header>
 
+<div class="container">
   <!-- Main Content will go here -->
   <main id="content">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-          <router-outlet></router-outlet>
-        </div>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12">
+        <router-outlet></router-outlet>
       </div>
     </div>
   </main>
 
-  <!-- Footer Component goes here. Loads only when logged in. -->
+  <!-- Footer Component goes here. Loads when not logged in also. -->
   <app-footer></app-footer>
 </div>

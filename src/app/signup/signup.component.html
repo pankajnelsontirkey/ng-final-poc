@@ -1,0 +1,82 @@
+<!--
+  Signup page for adding users (HR role) to users lists
+  Only accessible to logged in user with 'Admin' role!
+-->
+
+<div class="row signupForm">
+  <div>
+    <div class="row">
+      <h4>Signup Page</h4>
+    </div>
+    <div class="row">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <!-- First Name -->
+        <div class="row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- Last Name -->
+        <div class="row">
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- Email -->
+        <div class="row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="row">
+          <div class="form-group">
+            <label for="password"> Password </label>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- Confirm Password -->
+        <div class="row">
+          <div class="form-group">
+            <label for="cpassword">Confirm Password </label>
+            <input
+              type="password"
+              id="cpassword"
+              formControlName="cpassword"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- Role -->
+        <!-- <div class="row">
+        <div class="col-xs-12"></div>
+      </div> -->
+        <button class="btn btn-primary" type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+</div>

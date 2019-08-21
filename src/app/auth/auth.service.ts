@@ -16,7 +16,7 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
-  private isLoggedIn: boolean = false;
+  private isLoggedIn: boolean = true;
 
   constructor(private http: HttpClient) {}
 

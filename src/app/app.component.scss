@@ -1,12 +1,10 @@
 .container {
   box-sizing: border-box;
-  margin: auto;
-  justify-content: center;
-  .row {
-    justify-content: center;
+  // width: 100%;
+  // .row {
+  //   justify-content: center;
+  // }
+  main {
+    margin-top: 10vh;
   }
-}
-
-main {
-  margin-top: 15vh;
 }

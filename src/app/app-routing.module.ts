@@ -5,6 +5,7 @@ import { LoginComponent } from "./login/login.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { EmployeesComponent } from "./employees/employees.component";
 import { AuthGuard } from "./auth/auth.guard";
+import { SignupComponent } from "./signup/signup.component";
 
 const routes: Routes = [
   {
@@ -12,6 +13,8 @@ const routes: Routes = [
     redirectTo: "login",
     pathMatch: "full"
   },
+  { path: "signup", component: SignupComponent, canActivate: [AuthGuard] },
+
   { path: "login", component: LoginComponent },
   {
     path: "dashboard",
