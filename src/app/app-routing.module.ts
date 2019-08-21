@@ -1,33 +1,49 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import { LoginComponent } from "./login/login.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { EmployeesComponent } from "./employees/employees.component";
 import { AuthGuard } from "./auth/auth.guard";
-import { SignupComponent } from "./signup/signup.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { AdminDashboardComponent } from "./admin/adminDashboard.component";
+import { EmployeesComponent } from "./employees/employees.component";
+import { ListUsersComponent } from "./admin/listUsers/listUsers.component";
+import { AddUsersComponent } from "./admin/addUsers/addUsers.component";
+import { UserDashboardComponent } from "./user/userDashboard.component";
 
 const routes: Routes = [
-  {
-    path: "",
-    redirectTo: "login",
-    pathMatch: "full"
-  },
-  { path: "signup", component: SignupComponent, canActivate: [AuthGuard] },
-
+  { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   {
-    path: "dashboard",
-    component: DashboardComponent,
-    canActivate: [AuthGuard]
+    path: "admin",
+    component: AdminDashboardComponent,
+    /* Add guard to allow only admin logins to reach here */
+    // canActivate: [AuthGuard],
+    children: [
+      {
+        path: "list-users",
+        component: ListUsersComponent,
+        children: [
+          {
+            path: "add-users",
+            component: AddUsersComponent
+          }
+        ]
+      }
+    ]
   },
   {
-    path: "employees",
-    component: EmployeesComponent,
+    path: "dashboard",
+    component: UserDashboardComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: "add", component: DashboardComponent },
-      { path: ":id", component: DashboardComponent },
-      { path: ":id/edit", component: DashboardComponent }
+      {
+        path: "employees",
+        component: EmployeesComponent,
+        children: [
+          { path: "add", component: UserDashboardComponent },
+          { path: ":id", component: UserDashboardComponent },
+          { path: ":id/edit", component: UserDashboardComponent }
+        ]
+      }
     ]
   }
 ];

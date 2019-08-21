@@ -2,12 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 @Component({
-  selector: "app-signup",
-  templateUrl: "./signup.component.html",
-  styleUrls: ["./signup.component.scss"]
+  selector: "app-addUser",
+  templateUrl: "./addUsers.component.html",
+  styleUrls: ["./addUsers.component.scss"]
 })
-export class SignupComponent implements OnInit {
-  signupForm: FormGroup;
+export class AddUsersComponent implements OnInit {
+  addUserForm: FormGroup;
   constructor() {}
 
   ngOnInit() {
@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit {
   }
 
   private initForm() {
-    this.signupForm = new FormGroup({
+    this.addUserForm = new FormGroup({
       firstName: new FormControl("", [Validators.required]),
       lastName: new FormControl("", [Validators.required]),
       email: new FormControl("", [
@@ -33,18 +33,18 @@ export class SignupComponent implements OnInit {
         Validators.maxLength(12),
         this.confirmPassword.bind(this)
       ]),
-      role: new FormControl("")
+      role: new FormControl("hr", [Validators.required])
     });
   }
 
   onSubmit() {
-    console.log(this.signupForm.value);
+    console.log(this.addUserForm.value);
   }
 
   checkEmail() {
-    if (this.signupForm) {
+    if (this.addUserForm) {
       const emailPattern = /\w+@\w+\.\w{2,3}/;
-      if (!emailPattern.test(this.signupForm.get("email").value)) {
+      if (!emailPattern.test(this.addUserForm.get("email").value)) {
         return { errorEmail: "Email is invalid!" };
       } else {
         console.log("Testing - ", emailPattern.test("test@mail.com"));
@@ -54,9 +54,9 @@ export class SignupComponent implements OnInit {
   }
 
   confirmPassword() {
-    if (this.signupForm) {
-      let password = this.signupForm.get("password").value;
-      let cpassword = this.signupForm.get("cpassword").value;
+    if (this.addUserForm) {
+      let password = this.addUserForm.get("password").value;
+      let cpassword = this.addUserForm.get("cpassword").value;
       if (!cpassword === password) {
         return {
           errorPassword: "Password confirmation mismatch!"

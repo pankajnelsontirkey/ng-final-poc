@@ -14,9 +14,18 @@ export interface AuthResponseData {
   registered?: boolean;
 }
 
+export interface currentUser {
+  username: string;
+  email: string;
+  role: string;
+  token: number;
+  expirationTimer: number;
+}
+
 @Injectable({ providedIn: "root" })
 export class AuthService {
-  private isLoggedIn: boolean = true;
+  private isLoggedIn: boolean = false;
+  private user: currentUser = null;
 
   constructor(private http: HttpClient) {}
 
@@ -59,5 +68,13 @@ export class AuthService {
     return this.isLoggedIn;
   }
 
-  // Method to save auth token to local storage
+  set currentUser(user: currentUser) {
+    this.currentUser = user;
+  }
+
+  get currentUser() {
+    return this.currentUser;
+  }
+  // Method to manage login (add tokens, generate expiration, etc.)
+  manageLogin() {}
 }

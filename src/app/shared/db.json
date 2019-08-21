@@ -1,10 +1,9 @@
 {
   "users": [
     {
-      "name": "Pankaj Tirkey",
+      "fullName": "Pankaj Nelson Tirkey",
       "email": "pankajnelsontirkey@gmail.com",
       "password": "adminpassword",
-      "createdAt": "",
       "role": "admin"
     }
   ],
