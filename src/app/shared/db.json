@@ -5,6 +5,12 @@
       "email": "pankajnelsontirkey@gmail.com",
       "password": "adminpassword",
       "role": "admin"
+    },
+    {
+      "fullName": "Apoorva Singh",
+      "email": "apoorvasingh@gmail.com",
+      "password": "hrpassword",
+      "role": "hr"
     }
   ],
   "employees": []

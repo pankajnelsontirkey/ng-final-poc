@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 })
 export class AddUsersComponent implements OnInit {
   addUserForm: FormGroup;
+
   constructor() {}
 
   ngOnInit() {
@@ -39,6 +40,8 @@ export class AddUsersComponent implements OnInit {
 
   onSubmit() {
     console.log(this.addUserForm.value);
+
+    // Call auth service to proceed with login
   }
 
   checkEmail() {

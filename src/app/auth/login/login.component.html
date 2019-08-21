@@ -1,15 +1,12 @@
-<div class="row">
-  <h4>Login</h4>
-</div>
-<!-- <span class="help-block" *ngIf="">
-  <p>{{ this.error }}</p>
-</span> -->
+<div class="container">
+  <h4>Login Page</h4>
 
-<div class="row">
-  <div class="col-xs-12">
+  <hr />
+
+  <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-      <div class="row">
-        <div class="col-xs-12 col-md-12 form-group">
+      <div class="form-row">
+        <div class="form-group">
           <label for="email"> Email </label>
           <input
             type="text"
@@ -22,43 +19,32 @@
             #email="ngModel"
             class="form-control"
           />
-          <div class="help-block" *ngIf="email.touched && !email.valid">
+          <span class="form-text" *ngIf="email.touched && !email.valid">
             Email is required.
-          </div>
+          </span>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12 form-group">
+        <div class="form-group">
           <label for="password"> Password </label>
           <input
             type="password"
             name="password"
             id="password"
-            placeholder="password (min 6 characters)"
+            placeholder="your secret goes here"
             ngModel
             required
             minlength="6"
             #password="ngModel"
             class="form-control"
           />
-          <div class="help-block" *ngIf="password.touched && !password.valid">
+          <span class="form-text" *ngIf="password.touched && !password.valid">
             Password is invalid
-          </div>
+          </span>
         </div>
       </div>
 
       <div>
         <button class="btn btn-primary" type="submit">
-          {{ loginMode ? "Login" : "Sign Up" }}
-        </button>
-        &nbsp;|&nbsp;
-        <button
-          class="btn btn-primary toggleLoginButton"
-          type="button"
-          (click)="toggleMode()"
-        >
-          Switch to {{ !loginMode ? "Login" : "Sign Up" }}
+          Login
         </button>
       </div>
     </form>

@@ -10,37 +10,21 @@ import { AuthService } from "../auth.service";
 })
 export class LoginComponent implements OnInit {
   @ViewChild("f", { static: false }) loginForm: FormGroup;
-  loginMode: boolean = true;
   error: any = "";
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {}
 
-  onSubmit(form: NgForm) {
-    if (!form.valid) {
-      this.error = form.errors;
-      console.log(
-        form.controls["email"]["errors"],
-        form.controls["password"]["errors"]
-      );
+  onSubmit(loginForm: NgForm) {
+    // Check for invalid form first.
+    /* Always handle exceptions/errors first! */
+    if (!loginForm.valid) {
+      // Form data invalid, can't proceed.
+      this.error = loginForm.errors;
       return;
+    } else {
+      this.authService.login(loginForm.value);
     }
-    // Else proceed to make http call for signUp/signIn
-    else {
-      // call login method in auth.service if loginMode is true;
-      if (this.loginMode) {
-        console.log(`${form.value.email} - ${form.value.password}`);
-
-        // this.authService.login(this.loginForm.value.);
-      } else {
-        // call login method in auth.service if loginMode is true;
-        // this.authService.signUp();
-      }
-    }
-  }
-
-  toggleMode() {
-    this.loginMode = !this.loginMode;
   }
 }

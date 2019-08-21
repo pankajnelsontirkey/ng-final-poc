@@ -1,44 +1,27 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { tap } from "rxjs/operators";
+import { tap, map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
-
-export interface AuthResponseData {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean;
-}
-
-export interface currentUser {
-  username: string;
-  email: string;
-  role: string;
-  token: number;
-  expirationTimer: number;
-}
+import { UserModel, LoginModel, CurrentUserModel } from "../shared/models";
+import { compileNgModule } from "@angular/compiler";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
   private isLoggedIn: boolean = false;
-  private user: currentUser = null;
+  private currentUser: CurrentUserModel = null;
 
   constructor(private http: HttpClient) {}
 
-  signUp(email: string, password: string) {
+  // Login for both admin & users
+  login(loginData: LoginModel) {
+    this.authenticateUser(loginData).subscribe(res => {});
+  }
+
+  // Add user can only be done by admin
+  adduser(user: UserModel) {
     return this.http
-      .post<AuthResponseData>(
-        `${environment.signUpURL}${environment.firebaseKey}`,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
+      .post(`${environment.jsonSvURL}${environment.employeesCollection}`, user)
       .pipe(
         tap(responseData => {
           console.log(responseData);
@@ -46,19 +29,27 @@ export class AuthService {
       );
   }
 
-  login(email: string, password: string) {
+  private authenticateUser(loginData: LoginModel) {
     return this.http
-      .post<AuthResponseData>(
-        `${environment.singInURL}${environment.firebaseKey}`,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
+      .get(`${environment.jsonSvURL}${environment.usersCollection}`)
       .pipe(
-        tap(responseData => {
-          console.log(responseData);
+        tap(usersList => {
+          console.log(loginData);
+          console.log(usersList);
+
+          for (let user in usersList) {
+            console.log(user["email"], loginData.email);
+
+            // if (user["email"] === loginData.email) {
+            //   console.log("Email found!");
+            //   if (user["passwrod"] === loginData.password) {
+            //     console.log("Password Match!");
+            //     break;
+            //   }
+            // } else {
+            //   console.log("Email not found");
+            // }
+          }
         })
       );
   }
@@ -68,13 +59,14 @@ export class AuthService {
     return this.isLoggedIn;
   }
 
-  set currentUser(user: currentUser) {
+  set user(user) {
+    // Add code to add expiration, etc to user
     this.currentUser = user;
   }
 
-  get currentUser() {
+  get user() {
     return this.currentUser;
   }
   // Method to manage login (add tokens, generate expiration, etc.)
-  manageLogin() {}
+  /* manageLogin() {} */
 }
