@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { ManageUsersService } from "../manageUsers.service";
 
 @Component({
   selector: "app-addUser",
@@ -9,7 +11,11 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 export class AddUsersComponent implements OnInit {
   addUserForm: FormGroup;
 
-  constructor() {}
+  constructor(
+    private manageUsersService: ManageUsersService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -39,9 +45,9 @@ export class AddUsersComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.addUserForm.value);
-
-    // Call auth service to proceed with login
+    if (this.addUserForm.valid) {
+      this.manageUsersService.adduser(this.addUserForm.value);
+    }
   }
 
   checkEmail() {
@@ -60,13 +66,17 @@ export class AddUsersComponent implements OnInit {
     if (this.addUserForm) {
       let password = this.addUserForm.get("password").value;
       let cpassword = this.addUserForm.get("cpassword").value;
-      if (!cpassword === password) {
-        return {
-          errorPassword: "Password confirmation mismatch!"
-        };
-      } else {
+      // console.log(this.addUserForm.get("cpassword"));
+
+      if (cpassword === password) {
         return null;
+      } else {
+        return { passwordMismatch: "Password confirmation mismatch!" };
       }
     }
+  }
+
+  onClose() {
+    this.router.navigate(["../"], { relativeTo: this.route });
   }
 }

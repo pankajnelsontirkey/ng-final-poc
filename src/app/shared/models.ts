@@ -1,10 +1,5 @@
-export interface LoginModel {
-  email: string;
-  password: string;
-}
-
 export interface UserModel {
-  id: string;
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -14,15 +9,22 @@ export interface UserModel {
 }
 
 export interface EmployeeModel {
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   empId: number;
+  createdAt: number;
 }
 
 export interface CurrentUserModel {
+  _id: string;
   fullName: string;
-  email: string;
   expirationTimer: number;
+}
+
+export interface LoginModel {
+  email: string;
+  password: string;
 }

@@ -1,77 +1,77 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap, catchError, map } from 'rxjs/operators';
-// import { uuidv4 } from 'uuid/v4'; /* Using v4 of uuid - gives random id */
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
-import { environment } from '../../environments/environment';
-import { UserModel, LoginModel } from '../shared/models';
-import { BehaviorSubject } from 'rxjs';
+import { UserModel, LoginModel } from "../shared/models";
+import { DataStorageService } from "../shared/data-storage.service";
+import { Subject, BehaviorSubject } from "rxjs";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class AuthService {
-  public user = new BehaviorSubject<UserModel>(null);
+  currentUser = new BehaviorSubject<UserModel>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private dataStorageService: DataStorageService,
+    private router: Router
+  ) {}
 
-  /* Login for both admin & users */
   login(loginData: LoginModel) {
-    return this.http
-      .get<UserModel[]>(`${environment.jsonSvURL}${environment.usersCollection}`)
-      .pipe(
-        map(usersList => {
-          let loginError: string = null;
-          for (let user of usersList) {
-            if (user['email'] !== loginData.email) {
-              // Case: Email not found in users database
-              loginError = 'Email not found.';
-            } else {
-              if (user['password'] !== loginData.password) {
-                // Case: Email found BUT Password incorrect
-                loginError = 'Invalid Password.';
-                return user;
-              } else {
-                // Case: Email found && Password correct
-                loginError = null;
-                this.handleAuthentication(user);
-                break;
-              }
-            }
-          }
-          if (loginError) {
-            console.log(loginError);
-          }
-        })
-      );
+    this.dataStorageService.fetchUsers().subscribe(users => {
+      /* Result can be either a user or an error */
+      let result = this.checkEmailPassword(users, loginData);
+      console.log(result);
+      if (!result["error"]) {
+        this.handleAuthentication(<UserModel>result);
+      }
+    });
   }
 
   logout() {
-    /* Remove user from localstorage */
-    localStorage.removeItem('currentUser');
-    /* Set user to null */
-    this.user.next(null);
+    localStorage.removeItem("currentUser");
+    this.router.navigate(["login"]);
   }
 
   autoLogin() {
-    let localUser = JSON.parse(localStorage.getItem('currentUser'));
-    let user;
-    this.user.next;
+    if (localStorage.getItem("currentUser")) {
+      let localUser = JSON.parse(localStorage.getItem("currentUser"));
+      console.log(localUser);
+    }
   }
 
-  /**
-   * After successful login, set username, role, token, etc of current logged-in user.
-   **/
-  private handleAuthentication(user: UserModel) {
-    /** Adding role key to user is required! Since user is private to auth service, it can safely hold role.  */
-    this.user.next(user);
+  private checkEmailPassword(users: UserModel[], loginData: LoginModel) {
+    for (let user of users) {
+      if (user["email"] === loginData["email"]) {
+        if (user["password"] === loginData["password"]) {
+          return user;
+        }
+      }
+    }
+    return { error: "Email/Password is incorrect" };
+  }
 
-    /** Using a temporary localUser that will be set to localStorage; it should not store user 'role' */
+  private handleAuthentication(user: UserModel) {
     let localUser = {
+      _id: user._id,
       email: user.email,
       fullName: `${user.firstName} ${user.lastName}`,
       expirationTimer: Date.now() + 3600
     };
+    localStorage.setItem("currentUser", JSON.stringify(localUser));
+    this.currentUser.next(user);
+    this.redirectToDashboard(<"admin" | "user">user.role);
+  }
 
-    /* Setting user in local storage */
-    localStorage.setItem('currentUser', JSON.stringify(localUser));
+  private redirectToDashboard(role: "admin" | "user") {
+    switch (role) {
+      case "admin":
+        this.router.navigate(["/admin"]);
+        break;
+      case "user":
+        this.router.navigate(["/dashboard"]);
+        break;
+      // Default case should never be realistically reached.
+      default:
+        console.log("How'd you reach here?");
+        this.router.navigate(["/login"]);
+    }
   }
 }

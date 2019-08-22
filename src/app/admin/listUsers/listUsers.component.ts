@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { ManageUsersService } from "../manageUsers.service";
+import { UserModel } from "src/app/shared/models";
 
 @Component({
   selector: "app-listUsers",
@@ -6,7 +8,11 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./listUsers.component.scss"]
 })
 export class ListUsersComponent implements OnInit {
-  constructor() {}
+  users: UserModel[];
 
-  ngOnInit() {}
+  constructor(private manageUsersService: ManageUsersService) {}
+
+  ngOnInit() {
+    this.manageUsersService.getUsers();
+  }
 }

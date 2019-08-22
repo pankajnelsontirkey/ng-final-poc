@@ -1,50 +1,47 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { AuthGuard } from './auth/auth.guard';
-import { RolesGuard } from './auth/roles.guard';
-import { LoginComponent } from './auth/login/login.component';
-import { AdminDashboardComponent } from './admin/adminDashboard.component';
-import { EmployeesComponent } from './employees/employees.component';
-import { ListUsersComponent } from './admin/listUsers/listUsers.component';
-import { AddUsersComponent } from './admin/addUsers/addUsers.component';
-import { UserDashboardComponent } from './user/userDashboard.component';
-import { UserNotFoundComponent } from './user-not-found/user-not-found.component';
+import { AuthGuard } from "./auth/auth.guard";
+import { UserNotFoundComponent } from "./user-not-found/user-not-found.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { AdminDashboardComponent } from "./admin/adminDashboard.component";
+import { ListUsersComponent } from "./admin/listUsers/listUsers.component";
+import { AddUsersComponent } from "./admin/addUsers/addUsers.component";
+import { UserDashboardComponent } from "./user/userDashboard.component";
+import { ListEmployeesComponent } from "./user/list-employees/list-employees.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'user-not-found', component: UserNotFoundComponent },
-  { path: 'login', component: LoginComponent },
+  { path: "", redirectTo: "user-not-found", pathMatch: "full" },
+  { path: "user-not-found", component: UserNotFoundComponent },
+  { path: "login", component: LoginComponent },
   {
-    path: 'admin',
+    path: "admin",
     component: AdminDashboardComponent,
     /* Add guard to allow only admin logins to reach here */
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
+      // {
+      //   path: "list-users",
+      //   component: ListUsersComponent
+      // },
       {
-        path: 'list-users',
-        component: ListUsersComponent,
-        children: [
-          {
-            path: 'add-users',
-            component: AddUsersComponent
-          }
-        ]
+        path: "add-users",
+        component: AddUsersComponent
       }
     ]
   },
   {
-    path: 'dashboard',
+    path: "dashboard",
     component: UserDashboardComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       {
-        path: 'employees',
-        component: EmployeesComponent,
+        path: "employees",
+        component: ListEmployeesComponent,
         children: [
-          { path: 'add', component: UserDashboardComponent },
-          { path: ':id', component: UserDashboardComponent },
-          { path: ':id/edit', component: UserDashboardComponent }
+          { path: "add", component: UserDashboardComponent },
+          { path: ":id", component: UserDashboardComponent },
+          { path: ":id/edit", component: UserDashboardComponent }
         ]
       }
     ]
