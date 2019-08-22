@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { v4 as uuid } from "uuid";
 
-import { UserModel } from "./models";
+import { UserModel, EmployeeModel } from "./models";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -11,8 +10,7 @@ import { environment } from "src/environments/environment";
 export class DataStorageService {
   constructor(private http: HttpClient) {}
 
-  addUser(userForm) {
-    const user: UserModel = { ...userForm, _id: uuid() };
+  addUser(user: UserModel) {
     return this.http.post(
       `${environment.jsonSvURL}${environment.usersCollection}`,
       user
@@ -26,4 +24,10 @@ export class DataStorageService {
   }
 
   fetchUser(_id: string) {}
+
+  addEmployee(employee: EmployeeModel) {}
+
+  fetchEmployees() {}
+
+  fetchEmployee(id: string) {}
 }

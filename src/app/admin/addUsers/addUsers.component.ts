@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
+import { v4 as uuid } from "uuid";
+
 import { ManageUsersService } from "../manageUsers.service";
+import { UserModel } from "src/app/shared/models";
 
 @Component({
   selector: "app-addUser",
@@ -46,7 +49,15 @@ export class AddUsersComponent implements OnInit {
 
   onSubmit() {
     if (this.addUserForm.valid) {
-      this.manageUsersService.adduser(this.addUserForm.value);
+      let user: UserModel = {
+        _id: uuid(),
+        firstName: this.addUserForm.get("firstName").value,
+        lastName: this.addUserForm.get("lastName").value,
+        email: this.addUserForm.get("email").value,
+        password: this.addUserForm.get("password").value,
+        role: this.addUserForm.get("role").value
+      };
+      this.manageUsersService.adduser(user);
     }
   }
 
