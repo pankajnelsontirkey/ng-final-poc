@@ -25,7 +25,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.authService.currentUser);
     if (this.authService.currentUser) {
       return true;
     } else {

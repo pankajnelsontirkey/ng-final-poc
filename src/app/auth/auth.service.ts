@@ -17,20 +17,18 @@ export class AuthService {
   ) {}
 
   login(loginData: LoginModel) {
-    return this.dataStorageService.getUsersForAuth().pipe(
-      map(
-        users => {
-          let userVerified = this.checkEmailPassword(users, loginData);
+    this.dataStorageService.getUsersForAuth().subscribe(
+      users => {
+        let userVerified = this.checkEmailPassword(users, loginData);
 
-          if (!userVerified["error"]) {
-            this.handleAuthentication(<UserModel>userVerified);
-          } else {
-          }
-        },
-        error => {
-          console.log("error", error);
+        if (!userVerified["error"]) {
+          this.handleAuthentication(<UserModel>userVerified);
+        } else {
         }
-      )
+      },
+      error => {
+        console.log("error", error);
+      }
     );
   }
 
@@ -42,14 +40,16 @@ export class AuthService {
   autoLogin() {
     let localUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    if (localUser) {
-      this.dataStorageService
-        .getUserRoleByUid(localUser["_id"])
-        .subscribe(role => {
-          this.currentUser = { ...localUser, role };
-          this.currentUserChanged.next(this.currentUser);
-        });
+    if (!localUser && localUser["currentUser"]) {
+      return;
     }
+
+    this.dataStorageService
+      .getUserRoleByUid(localUser["_id"])
+      .subscribe(role => {
+        this.currentUser = { ...localUser, role };
+        this.currentUserChanged.next(this.currentUser);
+      });
   }
 
   private checkEmailPassword(users: UserModel[], loginData: LoginModel) {

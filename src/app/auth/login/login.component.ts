@@ -15,16 +15,15 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    if (this.authService.currentUser) {
-      this.router.navigate([`${this.authService.getNextRoute}`]);
-    }
-
-    this.authService.autoLogin();
     this.authService.currentUserChanged.subscribe(currentUser => {
       if (currentUser) {
-        this.authService.getNextRoute(<"admin" | "user" | null>(
-          currentUser.role
-        ));
+        switch (currentUser.role) {
+          case "admin":
+            this.router.navigate(["/admin"]);
+            break;
+          case "user":
+            this.router;
+        }
       }
     });
   }
@@ -34,14 +33,7 @@ export class LoginComponent implements OnInit {
       // Show Error Alert Modal
       return;
     } else {
-      this.authService.login(loginForm.value).subscribe(
-        nextRoute => {
-          this.router.navigate([nextRoute]);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      this.authService.login(loginForm.value);
     }
   }
 }
