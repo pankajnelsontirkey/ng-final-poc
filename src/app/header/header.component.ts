@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { CurrentUserModel } from "../shared/models";
+
 import { AuthService } from "../auth/auth.service";
-import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-header",
@@ -11,19 +10,28 @@ import { Subscription } from "rxjs";
 export class HeaderComponent implements OnInit, OnDestroy {
   public collapsed: boolean = true;
   currentUserName: string = "";
+  isLoggedIn: boolean = false;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.currentUser.subscribe(value => {
-      if (value) {
-        this.currentUserName = `${value.firstName} ${value.lastName}`;
+    this.authService.currentUserChanged.subscribe(currentUser => {
+      if (currentUser) {
+        this.isLoggedIn = true;
+        this.currentUserName = currentUser.fullName;
       }
     });
   }
 
   onLogout() {
+    this.isLoggedIn = false;
     this.authService.logout();
+  }
+
+  redirectToHome() {
+    this.authService.getNextRoute(<"admin" | "user" | null>(
+      this.authService.currentUser.role
+    ));
   }
 
   ngOnDestroy() {}

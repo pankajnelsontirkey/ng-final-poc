@@ -43,7 +43,7 @@ export class AddUsersComponent implements OnInit {
         Validators.maxLength(12),
         this.confirmPassword.bind(this)
       ]),
-      role: new FormControl("hr", [Validators.required])
+      role: new FormControl("user", [Validators.required])
     });
   }
 
@@ -57,7 +57,8 @@ export class AddUsersComponent implements OnInit {
         password: this.addUserForm.get("password").value,
         role: this.addUserForm.get("role").value
       };
-      this.manageUsersService.adduser(user);
+
+      this.manageUsersService.saveUser(user);
     }
   }
 

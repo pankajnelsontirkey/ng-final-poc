@@ -1,12 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 
+import { ManageUsersService } from "./manageUsers.service";
+
 @Component({
   selector: "app-admin",
   templateUrl: "./adminDashboard.component.html",
   styleUrls: ["./adminDashboard.component.scss"]
 })
 export class AdminDashboardComponent implements OnInit {
-  constructor() {}
+  showAddUser: boolean = false;
 
-  ngOnInit() {}
+  constructor(private manageUsersService: ManageUsersService) {}
+
+  ngOnInit() {
+    this.manageUsersService.fetchUsers();
+  }
 }

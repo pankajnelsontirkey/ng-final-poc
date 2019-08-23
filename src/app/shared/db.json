@@ -1,24 +1,31 @@
 {
   "users": [
     {
+      "_id": "da6720d9-556c-4f25-9068-2b0505355bb8",
       "firstName": "Pankaj",
       "lastName": "Tirkey",
       "email": "pankajtirkey@gmail.com",
       "password": "password",
-      "cpassword": "password",
       "role": "admin",
-      "_id": "da6720d9-556c-4f25-9068-2b0505355bb8",
       "id": 1
     },
     {
+      "_id": "45c57390-b3af-44f2-b508-9f0b9a71a64d",
       "firstName": "Apoorva",
       "lastName": "Singh",
       "email": "apoorvasingh@gmail.com",
       "password": "password",
-      "cpassword": "password",
       "role": "user",
-      "_id": "45c57390-b3af-44f2-b508-9f0b9a71a64d",
       "id": 2
+    },
+    {
+      "_id": "9915d85a-545f-449b-8019-c59872985ad9",
+      "firstName": "Randhir",
+      "lastName": "Sah",
+      "email": "rankr@gmail.com",
+      "password": "password",
+      "role": "user",
+      "id": 3
     }
   ],
   "employees": []

@@ -1,3 +1,11 @@
+export interface UserItem {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+}
+
 export interface UserModel {
   _id: string;
   firstName: string;
@@ -8,20 +16,27 @@ export interface UserModel {
   createdAt?: string;
 }
 
+export interface CurrentUserModel {
+  _id: string;
+  fullName: string;
+  email: string;
+  role: string;
+  expirationTimer: number;
+}
+
+export interface LocalUserModel {
+  _id: string;
+  fullName: string;
+  expirationTimer: number;
+}
+
 export interface EmployeeModel {
   _id: string;
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   empId: number;
   createdAt: number;
-}
-
-export interface CurrentUserModel {
-  _id: string;
-  fullName: string;
-  expirationTimer: number;
 }
 
 export interface LoginModel {

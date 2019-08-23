@@ -1,7 +1,7 @@
 <header>
   <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top ">
-      <a class="navbar-brand" routerLink="/dashboard">App</a>
+      <a class="navbar-brand" (click)="redirectToHome()">My App</a>
       <ul class="nav navbar-nav">
         <li>Current Page</li>
       </ul>
@@ -22,8 +22,8 @@
         id="menu-items"
       >
         <ul class="nav navbar-nav ml-auto">
-          <li *ngIf="currentUser">
-            <a class="nav-link"> {{ currentUser.fullName }} </a>
+          <li>
+            <a class="nav-link"> {{ currentUserName }} </a>
           </li>
           <li>
             <a class="nav-link" (click)="onLogout()"> Logout </a>

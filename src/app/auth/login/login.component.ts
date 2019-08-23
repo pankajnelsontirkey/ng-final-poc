@@ -3,7 +3,6 @@ import { FormGroup, NgForm } from "@angular/forms";
 
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
-import { UserModel } from "src/app/shared/models";
 
 @Component({
   selector: "app-login",
@@ -17,13 +16,28 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.authService.autoLogin();
+    this.authService.currentUserChanged.subscribe(currentUser => {
+      if (currentUser) {
+        this.authService.getNextRoute(<"admin" | "user" | null>(
+          currentUser.role
+        ));
+      }
+    });
   }
 
   onSubmit(loginForm: NgForm) {
     if (!loginForm.valid) {
+      // Show Error Alert Modal
       return;
     } else {
-      this.authService.login(loginForm.value);
+      this.authService.login(loginForm.value).subscribe(
+        nextRoute => {
+          this.router.navigate([nextRoute]);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
   }
 }

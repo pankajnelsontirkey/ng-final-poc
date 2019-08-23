@@ -1,13 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { map } from "rxjs/operators";
 
-import { UserModel, LoginModel } from "../shared/models";
+import { UserModel, LoginModel, CurrentUserModel } from "../shared/models";
 import { DataStorageService } from "../shared/data-storage.service";
-import { Subject, BehaviorSubject } from "rxjs";
+import { Subject } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
-  currentUser = new BehaviorSubject<UserModel>(null);
+  currentUser: CurrentUserModel;
+  currentUserChanged = new Subject<CurrentUserModel>();
 
   constructor(
     private dataStorageService: DataStorageService,
@@ -15,14 +17,23 @@ export class AuthService {
   ) {}
 
   login(loginData: LoginModel) {
-    this.dataStorageService.fetchUsers().subscribe(users => {
-      /* Result can be either a user or an error */
-      let result = this.checkEmailPassword(users, loginData);
-      console.log(result);
-      if (!result["error"]) {
-        this.handleAuthentication(<UserModel>result);
-      }
-    });
+    return this.dataStorageService.getUsersForAuth().pipe(
+      map(
+        users => {
+          let userVerified = this.checkEmailPassword(users, loginData);
+
+          if (!userVerified["error"]) {
+            let nextRoute = this.handleAuthentication(<UserModel>userVerified);
+            return nextRoute;
+          } else {
+            return "/login";
+          }
+        },
+        error => {
+          console.log("error", error);
+        }
+      )
+    );
   }
 
   logout() {
@@ -31,9 +42,15 @@ export class AuthService {
   }
 
   autoLogin() {
-    if (localStorage.getItem("currentUser")) {
-      let localUser = JSON.parse(localStorage.getItem("currentUser"));
-      console.log(localUser);
+    let localUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if (localUser) {
+      this.dataStorageService
+        .getUserRoleByUid(localUser["_id"])
+        .subscribe(role => {
+          this.currentUser = { ...localUser, role };
+          this.currentUserChanged.next(this.currentUser);
+        });
     }
   }
 
@@ -48,30 +65,42 @@ export class AuthService {
     return { error: "Email/Password is incorrect" };
   }
 
-  private handleAuthentication(user: UserModel) {
-    let localUser = {
+  private handleAuthentication(user: UserModel): string {
+    const expirationTimer = Date.now() + 3600;
+    /** currentUser will be kept in authService; has role which can be called for role-based access */
+
+    let currentUser: CurrentUserModel = {
       _id: user._id,
+      fullName: user.firstName + " " + user.lastName,
       email: user.email,
-      fullName: `${user.firstName} ${user.lastName}`,
-      expirationTimer: Date.now() + 3600
+      role: user.role,
+      expirationTimer: expirationTimer
     };
+
+    this.currentUser = currentUser;
+    this.currentUserChanged.next(this.currentUser);
+
+    /** localUser for storing in localStorage; should not hold 'role' property */
+    let localUser = {
+      _id: this.currentUser._id,
+      email: this.currentUser.email,
+      fullName: this.currentUser.fullName,
+      expirationTimer: this.currentUser.expirationTimer
+    };
+
     localStorage.setItem("currentUser", JSON.stringify(localUser));
-    this.currentUser.next(user);
-    this.redirectToDashboard(<"admin" | "user">user.role);
+
+    return this.getNextRoute(<"admin" | "user" | null>this.currentUser.role);
   }
 
-  private redirectToDashboard(role: "admin" | "user") {
+  getNextRoute(role: "admin" | "user" | null): string {
     switch (role) {
       case "admin":
-        this.router.navigate(["/admin"]);
-        break;
+        return "/admin";
       case "user":
-        this.router.navigate(["/dashboard"]);
-        break;
-      // Default case should never be realistically reached.
+        return "/dashboard";
       default:
-        console.log("How'd you reach here?");
-        this.router.navigate(["/login"]);
+        return "/login";
     }
   }
 }

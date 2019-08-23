@@ -9,6 +9,8 @@ import { ListUsersComponent } from "./admin/listUsers/listUsers.component";
 import { AddUsersComponent } from "./admin/addUsers/addUsers.component";
 import { UserDashboardComponent } from "./user/userDashboard.component";
 import { ListEmployeesComponent } from "./user/list-employees/list-employees.component";
+import { AdminGuard } from "./admin/admin.guard";
+import { UserGuard } from "./user/user.guard";
 
 const routes: Routes = [
   { path: "", redirectTo: "user-not-found", pathMatch: "full" },
@@ -18,14 +20,14 @@ const routes: Routes = [
     path: "admin",
     component: AdminDashboardComponent,
     /* Add guard to allow only admin logins to reach here */
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
     children: [
       // {
       //   path: "list-users",
       //   component: ListUsersComponent
       // },
       {
-        path: "add-users",
+        path: "add-user",
         component: AddUsersComponent
       }
     ]
@@ -33,7 +35,7 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: UserDashboardComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard, UserGuard],
     children: [
       {
         path: "employees",

@@ -1,24 +1,24 @@
 import { Injectable } from "@angular/core";
 
-import { UserModel } from "../shared/models";
+import { UserModel, UserItem } from "../shared/models";
+import { Subject } from "rxjs";
 import { DataStorageService } from "../shared/data-storage.service";
-import { BehaviorSubject, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class ManageUsersService {
-  users: UserModel[] = [];
-  usersChanged = new BehaviorSubject<UserModel[]>(null);
+  users: UserItem[] = [];
+  usersChanged = new Subject<UserItem[]>();
 
-  constructor(private dataStorageService: DataStorageService) {
-    this.getUsers();
-  }
+  constructor(private dataStorageService: DataStorageService) {}
 
-  adduser(user: UserModel) {
-    this.dataStorageService.addUser(user).subscribe(
-      responseData => {
-        console.log(responseData);
+  saveUser(user: UserModel) {
+    this.dataStorageService.addUserToDB(user).subscribe(
+      response => {
+        console.log(response);
+        this.users.push(user);
+        this.usersChanged.next(this.users.slice());
       },
       error => {
         console.log(error);
@@ -26,16 +26,14 @@ export class ManageUsersService {
     );
   }
 
-  getUsers() {
-    this.dataStorageService.fetchUsers().subscribe(users => {
-      if (users) {
-        this.users = users;
-        return this.users.slice();
-      }
+  fetchUsers() {
+    this.dataStorageService.getUsersFromDB().subscribe(responseData => {
+      this.users = responseData;
+      this.usersChanged.next(this.users.slice());
     });
   }
 
-  getUser(id: string) {
-    this.dataStorageService.fetchUser(id);
+  getUsers() {
+    return this.users.slice();
   }
 }

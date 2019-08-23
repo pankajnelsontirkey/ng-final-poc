@@ -1,7 +1,6 @@
 <!-- Header Component goes here. Loads only when logged in. -->
-<app-header></app-header>
-
 <div class="container">
+  <app-header *ngIf="isLoggedIn"></app-header>
   <!-- Main Content will go here -->
   <main id="content">
     <div class="row">
