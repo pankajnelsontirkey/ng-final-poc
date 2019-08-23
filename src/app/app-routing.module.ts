@@ -20,7 +20,7 @@ const routes: Routes = [
     path: "admin",
     component: AdminDashboardComponent,
     /* Add guard to allow only admin logins to reach here */
-    canActivate: [AuthGuard, AdminGuard],
+    canActivate: [AuthGuard],
     children: [
       // {
       //   path: "list-users",
@@ -35,7 +35,7 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: UserDashboardComponent,
-    canActivate: [AuthGuard, UserGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: "employees",

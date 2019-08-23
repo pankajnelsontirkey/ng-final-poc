@@ -24,13 +24,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.authService.currentUser.role);
+    console.log(this.authService.currentUser);
     if (this.authService.currentUser) {
       return true;
     } else {
       return this.router.createUrlTree(["/user-not-found"]);
     }
   }
+
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

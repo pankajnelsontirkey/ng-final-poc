@@ -23,10 +23,8 @@ export class AuthService {
           let userVerified = this.checkEmailPassword(users, loginData);
 
           if (!userVerified["error"]) {
-            let nextRoute = this.handleAuthentication(<UserModel>userVerified);
-            return nextRoute;
+            this.handleAuthentication(<UserModel>userVerified);
           } else {
-            return "/login";
           }
         },
         error => {
@@ -65,7 +63,7 @@ export class AuthService {
     return { error: "Email/Password is incorrect" };
   }
 
-  private handleAuthentication(user: UserModel): string {
+  private handleAuthentication(user: UserModel) {
     const expirationTimer = Date.now() + 3600;
     /** currentUser will be kept in authService; has role which can be called for role-based access */
 
@@ -90,7 +88,10 @@ export class AuthService {
 
     localStorage.setItem("currentUser", JSON.stringify(localUser));
 
-    return this.getNextRoute(<"admin" | "user" | null>this.currentUser.role);
+    let nextPage = this.getNextRoute(<"admin" | "user" | null>(
+      this.currentUser.role
+    ));
+    this.redirectFromAuth(nextPage);
   }
 
   getNextRoute(role: "admin" | "user" | null): string {
@@ -102,5 +103,9 @@ export class AuthService {
       default:
         return "/login";
     }
+  }
+
+  redirectFromAuth(route: string) {
+    this.router.navigate([route]);
   }
 }

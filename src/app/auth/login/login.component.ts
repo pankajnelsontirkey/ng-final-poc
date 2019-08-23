@@ -15,6 +15,10 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
+    if (this.authService.currentUser) {
+      this.router.navigate([`${this.authService.getNextRoute}`]);
+    }
+
     this.authService.autoLogin();
     this.authService.currentUserChanged.subscribe(currentUser => {
       if (currentUser) {
