@@ -8,6 +8,7 @@ import {
   Router
 } from "@angular/router";
 import { Observable } from "rxjs";
+
 import { AuthService } from "./auth.service";
 
 @Injectable({
@@ -28,7 +29,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (this.authService.currentUser) {
       return true;
     } else {
-      return this.router.createUrlTree(["/user-not-found"]);
+      return this.router.createUrlTree(["/login"]);
     }
   }
 

@@ -7,7 +7,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
-import { UserNotFoundComponent } from "./user-not-found/user-not-found.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { AdminDashboardComponent } from "./admin/adminDashboard.component";
 import { AddUsersComponent } from "./admin/addUsers/addUsers.component";
@@ -22,7 +22,7 @@ import { EditEmployeeComponent } from "./user/list-employees/edit-employee/edit-
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    UserNotFoundComponent,
+    NotFoundComponent,
     LoginComponent,
     AdminDashboardComponent,
     AddUsersComponent,
