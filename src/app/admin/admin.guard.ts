@@ -24,7 +24,13 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return true;
+    let currentRole = this.authService.currentUser.role;
+    if (currentRole === "admin") {
+      return true;
+    } else {
+      let homeRoute = this.authService.getHomeRoute(currentRole);
+      return this.router.createUrlTree([homeRoute]);
+    }
   }
   canActivateChild(
     next: ActivatedRouteSnapshot,
@@ -34,14 +40,6 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    let currentRole = this.authService.currentUser.role;
-    console.log(currentRole);
-
-    if (currentRole === "admin") {
-      return true;
-    } else {
-      let homeRoute = this.authService.getHomeRoute(currentRole);
-      return this.router.createUrlTree([homeRoute]);
-    }
+    return true;
   }
 }
