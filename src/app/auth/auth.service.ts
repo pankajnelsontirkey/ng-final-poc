@@ -51,6 +51,9 @@ export class AuthService {
       });
   }
 
+  /* Auto Logout after expiration time */
+  // autoLogout() {}
+
   private checkEmailPassword(users: UserModel[], loginData: LoginModel) {
     for (let user of users) {
       if (user["email"] === loginData["email"]) {
@@ -86,31 +89,17 @@ export class AuthService {
     };
 
     localStorage.setItem("currentUser", JSON.stringify(localUser));
-
-    let nextPage = this.getNextRoute();
-    this.redirectFromAuth(nextPage);
   }
 
-  getNextRoute(): string {
-    let currentRole: string;
-    this.currentUserChanged.subscribe(currentUser => {
-      currentRole = currentUser.role;
-    });
-    let nextRoute: string = "/login";
-    switch (currentRole) {
+  getHomeRoute(role: string) {
+    switch (role) {
       case "admin":
-        nextRoute = "/admin";
-        break;
+        return "/admin";
       case "user":
-        nextRoute = "/dashboard";
-        break;
+        return "/dashboard";
       default:
-        nextRoute = "/login";
-        break;
+        return "/login";
     }
-    console.log(nextRoute);
-
-    return nextRoute;
   }
 
   redirectFromAuth(route: string) {

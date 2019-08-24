@@ -34,14 +34,14 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.authService.currentUser.role);
-    if (this.authService.currentUser.role === "admin") {
+    let currentRole = this.authService.currentUser.role;
+    console.log(currentRole);
+
+    if (currentRole === "admin") {
       return true;
     } else {
-      // const nextRoute = this.authService.getNextRoute(<"admin" | "user" | null>(
-      //   this.authService.currentUser.role
-      // ));
-      // return this.router.createUrlTree([nextRoute]);
+      let homeRoute = this.authService.getHomeRoute(currentRole);
+      return this.router.createUrlTree([homeRoute]);
     }
   }
 }
