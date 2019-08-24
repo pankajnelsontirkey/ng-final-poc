@@ -40,7 +40,7 @@ export class AuthService {
   autoLogin() {
     let localUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    if (!localUser && localUser["currentUser"]) {
+    if (!localUser) {
       return;
     }
 
@@ -88,21 +88,28 @@ export class AuthService {
 
     localStorage.setItem("currentUser", JSON.stringify(localUser));
 
-    let nextPage = this.getNextRoute(<"admin" | "user" | null>(
-      this.currentUser.role
-    ));
+    let nextPage = this.getNextRoute();
     this.redirectFromAuth(nextPage);
   }
 
-  getNextRoute(role: "admin" | "user" | null): string {
-    switch (role) {
+  getNextRoute(): string {
+    let currentRole: string;
+    this.currentUserChanged.subscribe(currentUser => {
+      currentRole = currentUser.role;
+    });
+    let nextRoute: string = "/login";
+    switch (currentRole) {
       case "admin":
-        return "/admin";
+        nextRoute = "/admin";
+        break;
       case "user":
-        return "/dashboard";
+        nextRoute = "/dashboard";
+        break;
       default:
-        return "/login";
+        nextRoute = "/login";
+        break;
     }
+    return nextRoute;
   }
 
   redirectFromAuth(route: string) {

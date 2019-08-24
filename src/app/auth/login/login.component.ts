@@ -22,7 +22,10 @@ export class LoginComponent implements OnInit {
             this.router.navigate(["/admin"]);
             break;
           case "user":
-            this.router;
+            this.router.navigate(["/dashboard"]);
+            break;
+          default:
+            this.router.navigate(["/login"]);
         }
       }
     });

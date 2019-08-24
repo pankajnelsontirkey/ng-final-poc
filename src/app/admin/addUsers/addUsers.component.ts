@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { v4 as uuid } from "uuid";
@@ -13,12 +13,9 @@ import { UserModel } from "src/app/shared/models";
 })
 export class AddUsersComponent implements OnInit {
   addUserForm: FormGroup;
+  @Output("closeAddUser") closeAddUser = new EventEmitter<boolean>();
 
-  constructor(
-    private manageUsersService: ManageUsersService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private manageUsersService: ManageUsersService) {}
 
   ngOnInit() {
     this.initForm();
@@ -57,7 +54,6 @@ export class AddUsersComponent implements OnInit {
         password: this.addUserForm.get("password").value,
         role: this.addUserForm.get("role").value
       };
-
       this.manageUsersService.saveUser(user);
     }
   }
@@ -89,6 +85,6 @@ export class AddUsersComponent implements OnInit {
   }
 
   onClose() {
-    this.router.navigate(["../"], { relativeTo: this.route });
+    this.closeAddUser.emit(true);
   }
 }

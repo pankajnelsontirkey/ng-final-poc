@@ -15,4 +15,8 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit() {
     this.manageUsersService.fetchUsers();
   }
+
+  toggleAddUser() {
+    this.showAddUser = !this.showAddUser;
+  }
 }

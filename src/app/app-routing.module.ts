@@ -19,17 +19,17 @@ const routes: Routes = [
     path: "admin",
     component: AdminDashboardComponent,
     /* Add guard to allow only admin logins to reach here */
-    canActivate: [AuthGuard],
-    children: [
+    canActivate: [AuthGuard]
+    /* children: [
       // {
       //   path: "list-users",
       //   component: ListUsersComponent
       // },
-      {
-        path: "add-user",
-        component: AddUsersComponent
-      }
-    ]
+      // {
+      //   path: "add-user",
+      //   component: AddUsersComponent
+      // }
+    ] */
   },
   {
     path: "dashboard",

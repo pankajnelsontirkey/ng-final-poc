@@ -1,6 +1,8 @@
 <div class="alert alert-danger" id="notFoundBox">
   <h3>
-    You do not have permissions to access this site. Please login first.
+    You seem to be lost. Please proceed to login.
   </h3>
-  <a class="btn btn-primary" routerLink="/login">Proceed to Login</a>
+  <a class="btn btn-primary" routerLink="/login" *ngIf="!isLoggedIn"
+    >Proceed to Login</a
+  >
 </div>
