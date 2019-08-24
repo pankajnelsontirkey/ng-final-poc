@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { map } from "rxjs/operators";
 
 import { UserModel, LoginModel, CurrentUserModel } from "../shared/models";
 import { DataStorageService } from "../shared/data-storage.service";
