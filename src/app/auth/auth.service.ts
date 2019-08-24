@@ -108,6 +108,8 @@ export class AuthService {
         nextRoute = "/login";
         break;
     }
+    console.log(nextRoute);
+
     return nextRoute;
   }
 

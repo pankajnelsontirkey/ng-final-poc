@@ -31,9 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   redirectToHome() {
-    this.authService.getNextRoute(<"admin" | "user" | null>(
-      this.authService.currentUser.role
-    ));
+    console.log(this.authService.getNextRoute());
   }
 
   ngOnDestroy() {}

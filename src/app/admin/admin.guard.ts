@@ -38,10 +38,10 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     if (this.authService.currentUser.role === "admin") {
       return true;
     } else {
-      const nextRoute = this.authService.getNextRoute(<"admin" | "user" | null>(
-        this.authService.currentUser.role
-      ));
-      return this.router.createUrlTree([nextRoute]);
+      // const nextRoute = this.authService.getNextRoute(<"admin" | "user" | null>(
+      //   this.authService.currentUser.role
+      // ));
+      // return this.router.createUrlTree([nextRoute]);
     }
   }
 }
