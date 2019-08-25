@@ -1,16 +1,19 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from '../auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.scss"]
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public collapsed: boolean = true;
-  currentUserName: string = "";
+  currentUserName: string = '';
+  currentRole: string = null;
   isLoggedIn: boolean = false;
+  subscription: Subscription;
 
   constructor(private authService: AuthService) {}
 
@@ -18,6 +21,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.currentUserChanged.subscribe(currentUser => {
       if (currentUser) {
         this.currentUserName = currentUser.fullName;
+        this.currentRole = currentUser.role;
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
       }
     });
   }
@@ -28,8 +35,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   redirectToHome() {
-    console.log(this.authService.getNextRoute());
+    this.authService.getHomeRoute(this.currentRole);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
