@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmployeeModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-list-employees',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-employees.component.scss']
 })
 export class ListEmployeesComponent implements OnInit {
+  employees: EmployeeModel[] = [];
   constructor() {}
 
   ngOnInit() {}

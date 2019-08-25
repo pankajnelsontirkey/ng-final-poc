@@ -1,12 +1,10 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { UserModel, UserItem } from "../shared/models";
-import { Subject } from "rxjs";
-import { DataStorageService } from "../shared/data-storage.service";
+import { UserModel, UserItem } from '../shared/models';
+import { Subject } from 'rxjs';
+import { DataStorageService } from '../shared/data-storage.service';
 
-@Injectable({
-  providedIn: "root"
-})
+@Injectable()
 export class ManageUsersService {
   users: UserItem[] = [];
   usersChanged = new Subject<UserItem[]>();

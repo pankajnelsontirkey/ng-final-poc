@@ -1,54 +1,49 @@
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
-import { UserModel, LoginModel, CurrentUserModel } from "../shared/models";
-import { DataStorageService } from "../shared/data-storage.service";
-import { Subject } from "rxjs";
+import { UserModel, LoginModel, CurrentUserModel } from '../shared/models';
+import { DataStorageService } from '../shared/data-storage.service';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   currentUser: CurrentUserModel;
-  currentUserChanged = new Subject<CurrentUserModel>();
+  currentUserChanged = new BehaviorSubject<CurrentUserModel>(null);
 
-  constructor(
-    private dataStorageService: DataStorageService,
-    private router: Router
-  ) {}
+  constructor(private dataStorageService: DataStorageService, private router: Router) {}
 
   login(loginData: LoginModel) {
     this.dataStorageService.getUsersForAuth().subscribe(
       users => {
         let userVerified = this.checkEmailPassword(users, loginData);
 
-        if (!userVerified["error"]) {
+        if (!userVerified['error']) {
           this.handleAuthentication(<UserModel>userVerified);
         } else {
         }
       },
       error => {
-        console.log("error", error);
+        console.log('error', error);
       }
     );
   }
 
   logout() {
-    localStorage.removeItem("currentUser");
-    this.router.navigate(["login"]);
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['../', '/login']);
   }
 
   autoLogin() {
-    let localUser = JSON.parse(localStorage.getItem("currentUser"));
+    let localUser = JSON.parse(localStorage.getItem('currentUser'));
 
     if (!localUser) {
       return;
     }
 
-    this.dataStorageService
-      .getUserRoleByUid(localUser["_id"])
-      .subscribe(role => {
-        this.currentUser = { ...localUser, role };
-        this.currentUserChanged.next(this.currentUser);
-      });
+    this.dataStorageService.getUserRoleByUid(localUser['_id']).subscribe(role => {
+      this.currentUser = { ...localUser, role };
+      this.currentUserChanged.next(this.currentUser);
+    });
   }
 
   /* Auto Logout after expiration time */
@@ -56,13 +51,13 @@ export class AuthService {
 
   private checkEmailPassword(users: UserModel[], loginData: LoginModel) {
     for (let user of users) {
-      if (user["email"] === loginData["email"]) {
-        if (user["password"] === loginData["password"]) {
+      if (user['email'] === loginData['email']) {
+        if (user['password'] === loginData['password']) {
           return user;
         }
       }
     }
-    return { error: "Email/Password is incorrect" };
+    return { error: 'Email/Password is incorrect' };
   }
 
   private handleAuthentication(user: UserModel) {
@@ -71,7 +66,7 @@ export class AuthService {
 
     let currentUser: CurrentUserModel = {
       _id: user._id,
-      fullName: user.firstName + " " + user.lastName,
+      fullName: user.firstName + ' ' + user.lastName,
       email: user.email,
       role: user.role,
       expirationTimer: expirationTimer
@@ -88,17 +83,17 @@ export class AuthService {
       expirationTimer: this.currentUser.expirationTimer
     };
 
-    localStorage.setItem("currentUser", JSON.stringify(localUser));
+    localStorage.setItem('currentUser', JSON.stringify(localUser));
   }
 
   getHomeRoute(role: string) {
     switch (role) {
-      case "admin":
-        return "/admin";
-      case "user":
-        return "/dashboard";
+      case 'admin':
+        return '/admin';
+      case 'user':
+        return '/dashboard';
       default:
-        return "/login";
+        return '/login';
     }
   }
 

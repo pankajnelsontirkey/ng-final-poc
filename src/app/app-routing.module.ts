@@ -10,23 +10,12 @@ import { UserDashboardComponent } from './user/userDashboard.component';
 import { ListEmployeesComponent } from './user/list-employees/list-employees.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
-const routes: Routes = [
+const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'admin',
-    component: AdminDashboardComponent,
-    canActivate: [AuthGuard, AdminGuard]
-    /* children: [
-      // {
-      //   path: "list-users",
-      //   component: ListUsersComponent
-      // },
-      // {
-      //   path: "add-user",
-      //   component: AddUsersComponent
-      // }
-    ] */
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'dashboard',
@@ -49,7 +38,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

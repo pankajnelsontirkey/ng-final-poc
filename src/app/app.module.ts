@@ -16,6 +16,7 @@ import { UserDashboardComponent } from './user/userDashboard.component';
 import { ListEmployeesComponent } from './user/list-employees/list-employees.component';
 import { AddEmployeesComponent } from './user/list-employees/add-employees/add-employees.component';
 import { EditEmployeeComponent } from './user/list-employees/edit-employee/edit-employee.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -24,15 +25,19 @@ import { EditEmployeeComponent } from './user/list-employees/edit-employee/edit-
     FooterComponent,
     NotFoundComponent,
     LoginComponent,
-    AdminDashboardComponent,
-    AddUsersComponent,
-    ListUsersComponent,
     UserDashboardComponent,
     ListEmployeesComponent,
     AddEmployeesComponent,
     EditEmployeeComponent
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, ReactiveFormsModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    AdminModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
