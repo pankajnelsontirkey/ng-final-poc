@@ -1,15 +1,18 @@
-<div class="col-xs-12">
+<div class="container">
+  <ul class="list-group"></ul>
   <div class="row">
-    <div class="col-xs-3 user-detail">First Name</div>
-    <div class="col-xs-3 user-detail">Last Name</div>
-    <div class="col-xs-3 user-detail">Email</div>
-    <div class="col-xs-3 user-detail">Role</div>
+    <div class="col-md-3 list-group-item">First Name</div>
+    <div class="col-md-3 list-group-item">Last Name</div>
+    <div class="col-md-3 list-group-item">Email</div>
+    <div class="col-md-3 list-group-item">Role</div>
   </div>
-  <ul class="list-group">
-    <div class="row">
-      <li *ngFor="let user of users" class="list-group-item">
-        <app-user-item [user]="user"></app-user-item>
-      </li>
-    </div>
-  </ul>
+
+  <div class="row" *ngFor="let user of users">
+    <div class="col-md-3 list-group-item">{{ user.firstName }}</div>
+    <div class="col-md-3 list-group-item">{{ user.lastName }}</div>
+    <div class="col-md-3 list-group-item">{{ user.email }}</div>
+    <div class="col-md-3 list-group-item">{{ user.role }}</div>
+
+    <span></span>
+  </div>
 </div>

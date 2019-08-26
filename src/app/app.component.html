@@ -1,7 +1,7 @@
-<div class="container">
-  <!-- Header Component goes here. Loads only when logged in. -->
-  <app-header *ngIf="isLoggedIn"></app-header>
+<!-- Header Component goes here. Loads only when logged in. -->
+<app-header *ngIf="isLoggedIn"></app-header>
 
+<div class="container">
   <!-- Main Content will go here -->
   <main id="content">
     <div class="row">
@@ -10,7 +10,7 @@
       </div>
     </div>
   </main>
-
-  <!-- Footer Component goes here. Loads when not logged in also. -->
-  <app-footer></app-footer>
 </div>
+
+<!-- Footer Component goes here. Loads when not logged in also. -->
+<app-footer></app-footer>

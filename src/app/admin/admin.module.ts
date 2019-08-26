@@ -1,27 +1,20 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+
 import { AdminDashboardComponent } from "./adminDashboard.component";
 import { AddUsersComponent } from "./add-users/add-users.component";
 import { ListUsersComponent } from "./list-users/list-users.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { ManageUsersService } from "./manageUsers.service";
+import { UsersService } from "./users.service";
 import { AdminRoutingModule } from "./admin-routing.module";
-import { UserItemComponent } from "./list-users/user-item/user-item.component";
 
 @NgModule({
   declarations: [
     AdminDashboardComponent,
     AddUsersComponent,
-    ListUsersComponent,
-    UserItemComponent
+    ListUsersComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AdminRoutingModule
-  ],
-  providers: [ManageUsersService]
+  imports: [CommonModule, ReactiveFormsModule, AdminRoutingModule],
+  providers: [UsersService]
 })
 export class AdminModule {}

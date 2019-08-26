@@ -1,25 +1,41 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
 
-import { UserModel, EmployeeModel, UserItem } from './models';
-import { environment } from 'src/environments/environment';
-import { ManageUsersService } from '../admin/manageUsers.service';
-import { map } from 'rxjs/operators';
+import { UserModel, EmployeeModel, UserItem } from "./models";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DataStorageService {
   constructor(private http: HttpClient) {}
 
   addUserToDB(user: UserModel) {
-    return this.http.post(`${environment.jsonSvURL}${environment.usersCollection}`, user);
+    return this.http
+      .post<UserModel>(
+        `${environment.jsonSvURL}${environment.usersCollection}`,
+        user
+      )
+      .pipe(
+        map(responseData => {
+          return <UserItem>{
+            _id: responseData._id,
+            firstName: responseData.firstName,
+            lastName: responseData.lastName,
+            email: responseData.email,
+            role: responseData.role
+          };
+        })
+      );
   }
 
   /* Only to be used by authService */
   getUsersForAuth() {
     return this.http
-      .get<UserModel[]>(`${environment.jsonSvURL}${environment.usersCollection}`)
+      .get<UserModel[]>(
+        `${environment.jsonSvURL}${environment.usersCollection}`
+      )
       .pipe(
         map(responseData => {
           return <UserModel[]>responseData.map(user => ({
@@ -37,7 +53,9 @@ export class DataStorageService {
   /* Only to be used by authService */
   getUserRoleByUid(_id: string) {
     return this.http
-      .get<UserModel[]>(`${environment.jsonSvURL}${environment.usersCollection}`)
+      .get<UserModel[]>(
+        `${environment.jsonSvURL}${environment.usersCollection}`
+      )
       .pipe(map(users => users.find(user => user._id === _id).role));
     /* pipe the response; use map to Observable value, only return role since other details for currentUser are already available from localstorage in authService. */
   }
@@ -47,7 +65,9 @@ export class DataStorageService {
    */
   getUsersFromDB() {
     return this.http
-      .get<UserModel[]>(`${environment.jsonSvURL}${environment.usersCollection}`)
+      .get<UserModel[]>(
+        `${environment.jsonSvURL}${environment.usersCollection}`
+      )
       .pipe(
         map(responseData => {
           return <UserItem[]>responseData.map(user => ({

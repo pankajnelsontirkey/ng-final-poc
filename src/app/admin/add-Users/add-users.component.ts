@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { v4 as uuid } from "uuid";
 
-import { ManageUsersService } from "../manageUsers.service";
+import { UsersService } from "../users.service";
 import { UserModel } from "src/app/shared/models";
 
 @Component({
@@ -14,7 +14,7 @@ export class AddUsersComponent implements OnInit {
   addUserForm: FormGroup;
   @Output("closeAddUser") closeAddUser = new EventEmitter<boolean>();
 
-  constructor(private manageUsersService: ManageUsersService) {}
+  constructor(private usersService: UsersService) {}
 
   ngOnInit() {
     this.initForm();
@@ -53,7 +53,7 @@ export class AddUsersComponent implements OnInit {
         password: this.addUserForm.get("password").value,
         role: this.addUserForm.get("role").value
       };
-      this.manageUsersService.saveUser(user);
+      this.usersService.saveUser(user);
       this.onClose();
     }
   }
@@ -64,7 +64,6 @@ export class AddUsersComponent implements OnInit {
       if (!emailPattern.test(this.addUserForm.get("email").value)) {
         return { errorEmail: "Email is invalid!" };
       } else {
-        console.log("Testing - ", emailPattern.test("test@mail.com"));
         return null;
       }
     }

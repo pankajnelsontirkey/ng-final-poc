@@ -44,6 +44,51 @@
       "password": "password",
       "role": "user",
       "id": 5
+    },
+    {
+      "_id": "0f193c23-478c-4351-a903-a2451887ac7c",
+      "firstName": "Himanshu",
+      "lastName": "Chaddha",
+      "email": "himanshu@gmail.com",
+      "password": "password",
+      "role": "admin",
+      "id": 6
+    },
+    {
+      "_id": "e69f2ef3-3910-46c0-b064-e150aacc9d07",
+      "firstName": "Ishan",
+      "lastName": "Sharma",
+      "email": "ishan@gmail.com",
+      "password": "password",
+      "role": "user",
+      "id": 7
+    },
+    {
+      "_id": "98834172-9a43-4a0e-aaa9-77f2872dfb40",
+      "firstName": "Tushar ",
+      "lastName": "Aggarwal",
+      "email": "tushar@gmail.com",
+      "password": "password",
+      "role": "admin",
+      "id": 8
+    },
+    {
+      "_id": "3f00b79e-8fdb-4554-b293-ef9a3405d7f5",
+      "firstName": "Lijo",
+      "lastName": "James",
+      "email": "lijo@gmail.com",
+      "password": "password",
+      "role": "admin",
+      "id": 9
+    },
+    {
+      "_id": "a39df099-bd0d-43a5-8683-29915ec60fac",
+      "firstName": "Abhishek",
+      "lastName": "Ganguly",
+      "email": "abhishek@gmail.com",
+      "password": "password",
+      "role": "user",
+      "id": 10
     }
   ],
   "employees": []

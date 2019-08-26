@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { ManageUsersService } from "./manageUsers.service";
+import { UsersService } from "./users.service";
 
 @Component({
   selector: "app-admin",
@@ -10,10 +10,10 @@ import { ManageUsersService } from "./manageUsers.service";
 export class AdminDashboardComponent implements OnInit {
   showAddUser: boolean = false;
 
-  constructor(private manageUsersService: ManageUsersService) {}
+  constructor(private usersService: UsersService) {}
 
   ngOnInit() {
-    this.manageUsersService.fetchUsers();
+    this.usersService.fetchUsers();
   }
 
   toggleAddUser() {

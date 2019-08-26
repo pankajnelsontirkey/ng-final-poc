@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 
-import { UserModel, UserItem } from '../shared/models';
-import { Subject } from 'rxjs';
-import { DataStorageService } from '../shared/data-storage.service';
+import { UserModel, UserItem } from "../shared/models";
+import { DataStorageService } from "../shared/data-storage.service";
 
 @Injectable()
-export class ManageUsersService {
+export class UsersService {
   users: UserItem[] = [];
   usersChanged = new Subject<UserItem[]>();
 
@@ -13,9 +13,15 @@ export class ManageUsersService {
 
   saveUser(user: UserModel) {
     this.dataStorageService.addUserToDB(user).subscribe(
-      response => {
-        console.log(response);
-        this.users.push(user);
+      user => {
+        console.log(user);
+        let userItem: UserItem;
+        userItem._id = user._id;
+        userItem.firstName = user.firstName;
+        userItem.lastName = user.lastName;
+        userItem.email = user.email;
+        userItem.role = user.role;
+        this.users.push(userItem);
         this.usersChanged.next(this.users.slice());
       },
       error => {
