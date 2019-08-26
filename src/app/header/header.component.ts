@@ -1,21 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from "@angular/core";
 
-import { AuthService } from '../auth/auth.service';
-import { Subscription } from 'rxjs';
+import { AuthService } from "../auth/auth.service";
+import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public collapsed: boolean = true;
-  currentUserName: string = '';
+  currentUserName: string = "";
   currentRole: string = null;
   isLoggedIn: boolean = false;
   subscription: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.authService.currentUserChanged.subscribe(currentUser => {

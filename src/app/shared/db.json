@@ -26,6 +26,24 @@
       "password": "password",
       "role": "user",
       "id": 3
+    },
+    {
+      "_id": "b05f0c48-2c1d-4239-9c4a-6933fddc2a9e",
+      "firstName": "Sandeep",
+      "lastName": "Sarswat",
+      "email": "sandeeps@gmail.com",
+      "password": "password",
+      "role": "user",
+      "id": 4
+    },
+    {
+      "_id": "cdabfca1-057a-456c-a7b0-5597be887c40",
+      "firstName": "someon",
+      "lastName": "somebody",
+      "email": "some@mail.com",
+      "password": "password",
+      "role": "user",
+      "id": 5
     }
   ],
   "employees": []

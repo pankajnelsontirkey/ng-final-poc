@@ -1,11 +1,17 @@
 <h2>Admin Dashboard</h2>
-<a type="button" class="btn btn-primary float-right" (click)="toggleAddUser()">
-  Add User
-</a>
-<div class="col-xs-12">
-  Users List
-  <app-listUsers></app-listUsers>
-</div>
-<app-addUser *ngIf="showAddUser" (closeAddUser)="toggleAddUser()"></app-addUser>
 
+<div class="col-xs-12">
+  <button type="button" class="btn btn-primary" (click)="toggleAddUser()">
+    Add User
+  </button>
+</div>
+
+<div class="col-xs-12">
+  <app-list-users></app-list-users>
+</div>
+
+<app-add-user
+  *ngIf="showAddUser"
+  (closeAddUser)="toggleAddUser()"
+></app-add-user>
 <!-- <router-outlet></router-outlet> -->

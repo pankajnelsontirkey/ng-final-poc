@@ -1,7 +1,8 @@
 <div class="alert alert-danger" id="notFoundBox">
   <h3>
-    You seem to be lost. Please proceed to login.
+    You seem to be lost. Please follow below link.
   </h3>
-  <a class="btn btn-primary" routerLink="/login" *ngIf="!isLoggedIn">Proceed to Login</a>
-  <a class="btn btn-info" *ngIf="isLoggedIn">Home</a>
+  <div class="btn btn-primary">
+    <a routerLink="/login"> {{ isLoggedIn ? "Home" : "Login" }}</a>
+  </div>
 </div>

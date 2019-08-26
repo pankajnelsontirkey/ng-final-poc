@@ -29,7 +29,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
       return true;
     } else {
       let homeRoute = this.authService.getHomeRoute(currentRole);
-      return this.router.createUrlTree([homeRoute]);
+      return this.router.createUrlTree(["../", homeRoute]);
     }
   }
   canActivateChild(
