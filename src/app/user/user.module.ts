@@ -18,7 +18,7 @@ import { EmployeesService } from "./employees.service";
     EditEmployeeComponent,
     DetailEmployeeComponent
   ],
-  imports: [CommonModule, UserRoutingModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, UserRoutingModule],
   providers: [EmployeesService]
 })
 export class UserModule {}
