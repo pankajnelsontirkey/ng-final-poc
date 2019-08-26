@@ -6,13 +6,12 @@
     <div class="col-md-3 list-group-item">Email</div>
     <div class="col-md-3 list-group-item">Role</div>
   </div>
-
+  <hr />
   <div class="row" *ngFor="let user of users">
     <div class="col-md-3 list-group-item">{{ user.firstName }}</div>
     <div class="col-md-3 list-group-item">{{ user.lastName }}</div>
     <div class="col-md-3 list-group-item">{{ user.email }}</div>
     <div class="col-md-3 list-group-item">{{ user.role }}</div>
-
-    <span></span>
+    <hr />
   </div>
 </div>

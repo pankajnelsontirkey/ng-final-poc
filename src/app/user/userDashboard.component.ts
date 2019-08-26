@@ -1,12 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+
+import { EmployeeModel } from "../shared/models";
+import { EmployeesService } from "./employees.service";
 
 @Component({
-  selector: 'app-hr',
-  templateUrl: './userDashboard.component.html',
-  styleUrls: ['./userDashboard.component.scss']
+  selector: "app-hr",
+  templateUrl: "./userDashboard.component.html",
+  styleUrls: ["./userDashboard.component.scss"]
 })
 export class UserDashboardComponent implements OnInit {
-  constructor() {}
+  employees: { first: EmployeeModel[]; recent: EmployeeModel };
 
-  ngOnInit() {}
+  constructor(private employeesService: EmployeesService) {}
+
+  ngOnInit() {
+    // this.employeesService.getEmployees();
+  }
 }

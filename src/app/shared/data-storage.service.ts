@@ -11,25 +11,6 @@ import { environment } from "src/environments/environment";
 export class DataStorageService {
   constructor(private http: HttpClient) {}
 
-  addUserToDB(user: UserModel) {
-    return this.http
-      .post<UserModel>(
-        `${environment.jsonSvURL}${environment.usersCollection}`,
-        user
-      )
-      .pipe(
-        map(responseData => {
-          return <UserItem>{
-            _id: responseData._id,
-            firstName: responseData.firstName,
-            lastName: responseData.lastName,
-            email: responseData.email,
-            role: responseData.role
-          };
-        })
-      );
-  }
-
   /* Only to be used by authService */
   getUsersForAuth() {
     return this.http
@@ -60,8 +41,32 @@ export class DataStorageService {
     /* pipe the response; use map to Observable value, only return role since other details for currentUser are already available from localstorage in authService. */
   }
 
-  /** Only to be used by admin role
+  /**
+   * Saves users to Db
+   * Only to be used by admin role
+   */
+  addUserToDB(user: UserModel) {
+    return this.http
+      .post<UserModel>(
+        `${environment.jsonSvURL}${environment.usersCollection}`,
+        user
+      )
+      .pipe(
+        map(responseData => {
+          return <UserItem>{
+            _id: responseData._id,
+            firstName: responseData.firstName,
+            lastName: responseData.lastName,
+            email: responseData.email,
+            role: responseData.role
+          };
+        })
+      );
+  }
+
+  /**
    * Fetches users from Db for displaying in listUsers on admin dashboard
+   * Only to be used by admin role
    */
   getUsersFromDB() {
     return this.http

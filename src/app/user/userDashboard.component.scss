@@ -1,0 +1,20 @@
+.container {
+  width: 100%;
+}
+
+.listEmployees {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  .firstFive {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .lastFive {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+}

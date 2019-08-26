@@ -28,17 +28,21 @@ export class EmployeesService {
   }
 
   /* Get all employees */
-  getEmployees() {
-    this.http
-      .get(`${environment.jsonSvURL}${environment.employeesCollection}`)
-      .subscribe(
-        responseData => {
-          console.log(responseData);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+  getEmployees(filter?: { type: string; limit: number }) {
+    if (filter) {
+      console.log(filter);
+    } else {
+      this.http
+        .get(`${environment.jsonSvURL}${environment.employeesCollection}`)
+        .subscribe(
+          responseData => {
+            console.log(responseData);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    }
   }
 
   /* Get employee by id */
@@ -58,4 +62,6 @@ export class EmployeesService {
         }
       );
   }
+
+  /* Method to get  */
 }
