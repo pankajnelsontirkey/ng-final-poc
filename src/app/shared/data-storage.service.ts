@@ -94,15 +94,9 @@ export class DataStorageService {
   }
 
   getEmployeesFromDB() {
-    return this.http
-      .get<EmployeeModel[]>(
-        `${environment.jsonSvURL}${environment.employeesCollection}`
-      )
-      .pipe(
-        tap(employees => {
-          console.log(employees);
-        })
-      );
+    return this.http.get<EmployeeModel[]>(
+      `${environment.jsonSvURL}${environment.employeesCollection}`
+    );
   }
 
   // getEmployeeFromDB(id: string) {}

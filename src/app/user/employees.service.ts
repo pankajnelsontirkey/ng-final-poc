@@ -17,7 +17,7 @@ export class EmployeesService {
   constructor(private dataStorageService: DataStorageService) {}
 
   /* Add one employee */
-  addEmployee(employeeForm) {
+  saveEmployee(employeeForm) {
     /* Create Employee model object */
     let newEmployee: EmployeeModel = {
       _id: uuid(),
@@ -41,13 +41,11 @@ export class EmployeesService {
   }
 
   /* Get all employees */
-  getEmployees(filter?: { type: string; limit: number }) {
+  fetchEmployees() {
     /* Call DataStorageService to fetch employees from database */
     this.dataStorageService.getEmployeesFromDB().subscribe(employees => {
-      console.log(employees);
       this.employees = employees;
       this.employeesChanged.next(this.employees.slice());
-      console.log(this.employees);
     });
   }
 

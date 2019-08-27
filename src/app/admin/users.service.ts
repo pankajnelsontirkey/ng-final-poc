@@ -31,8 +31,8 @@ export class UsersService {
   }
 
   fetchUsers() {
-    this.dataStorageService.getUsersFromDB().subscribe(responseData => {
-      this.users = responseData;
+    this.dataStorageService.getUsersFromDB().subscribe(users => {
+      this.users = users;
       this.usersChanged.next(this.users.slice());
     });
   }

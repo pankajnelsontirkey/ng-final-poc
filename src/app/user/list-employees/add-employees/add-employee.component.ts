@@ -29,7 +29,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
-    this.employeeService.addEmployee(this.addEmployeeForm.value);
+    this.employeeService.saveEmployee(this.addEmployeeForm.value);
   }
 
   emailValidator(control: FormControl) {
