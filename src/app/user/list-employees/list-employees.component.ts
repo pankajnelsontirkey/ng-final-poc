@@ -1,14 +1,29 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { EmployeeModel } from "src/app/shared/models";
+import { EmployeesService } from "../employees.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-list-employees",
   templateUrl: "./list-employees.component.html",
   styleUrls: ["./list-employees.component.scss"]
 })
-export class ListEmployeesComponent implements OnInit {
+export class ListEmployeesComponent implements OnInit, OnDestroy {
   employees: EmployeeModel[] = [];
-  constructor() {}
+  employeesSubscription: Subscription;
 
-  ngOnInit() {}
+  constructor(private employeesService: EmployeesService) {}
+
+  ngOnInit() {
+    this.employeesSubscription = this.employeesService.employeesChanged.subscribe(
+      employees => {
+        console.log(employees);
+        this.employees = employees;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.employeesSubscription.unsubscribe();
+  }
 }

@@ -35,11 +35,17 @@ export interface EmployeeModel {
   firstName: string;
   lastName: string;
   email: string;
-  empId: number;
+  employeeCode: string;
   createdAt: number;
 }
 
 export interface LoginModel {
   email: string;
   password: string;
+}
+
+export interface AddUserModel {
+  firstName: string;
+  lastName: string;
+  email: string;
 }

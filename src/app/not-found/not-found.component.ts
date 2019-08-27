@@ -9,6 +9,7 @@ import { Subscription } from "rxjs";
 })
 export class NotFoundComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
+
   subscription: Subscription;
 
   constructor(private authService: AuthService) {}

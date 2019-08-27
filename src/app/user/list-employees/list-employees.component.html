@@ -1,3 +1,16 @@
-<ul class="list-group">
-  <li *ngFor="let employee of employees" class="list-item"></li>
-</ul>
+<div class="container">
+  <h4>Employees List</h4>
+  <div class="row">
+    <div class="col-xs-12">
+      <a routerLink="/dashboard/employees/add">Add Employee</a>
+    </div>
+    <div class="col-xs-12">
+      <ul class="list-group">
+        <li class="list-group-item">Lorem ipsum dolor sit amet.</li>
+        <li class="list-group-item">Lorem ipsum dolor sit amet.</li>
+        <li class="list-group-item">Lorem ipsum dolor sit amet.</li>
+        <li *ngFor="let employee of employees" class="list-item"></li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -8,25 +8,19 @@ import { ListEmployeesComponent } from "./list-employees/list-employees.componen
 import { AddEmployeeComponent } from "./list-employees/add-employees/add-employee.component";
 import { EditEmployeeComponent } from "./list-employees/edit-employee/edit-employee.component";
 import { DetailEmployeeComponent } from "./detail-employee/detail-employee.component";
+import { SummaryComponent } from "./summary/summary.component";
 
 const UserRoutes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    component: UserDashboardComponent,
-    canActivate: [UserGuard],
-    children: [
-      {
-        path: "employees",
-        component: ListEmployeesComponent,
-        children: [
-          { path: "add", component: AddEmployeeComponent },
-          { path: ":id", component: DetailEmployeeComponent },
-          { path: ":id/edit", component: EditEmployeeComponent }
-        ]
-      }
-    ]
-  }
+    component: UserDashboardComponent
+    // canActivate: [UserGuard]
+  },
+  { path: "employees", component: ListEmployeesComponent },
+  { path: "employees/add", component: AddEmployeeComponent },
+  { path: "employees/:id", component: DetailEmployeeComponent },
+  { path: "employees/:id/edit", component: EditEmployeeComponent }
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 
 import { UserModel, EmployeeModel, UserItem } from "./models";
 import { environment } from "src/environments/environment";
@@ -86,9 +86,24 @@ export class DataStorageService {
       );
   }
 
-  addEmployeeToDB(employee: EmployeeModel) {}
+  addEmployeeToDB(newEmployee: EmployeeModel) {
+    return this.http.post<EmployeeModel>(
+      `${environment.jsonSvURL}${environment.employeesCollection}`,
+      newEmployee
+    );
+  }
 
-  getEmployeesFromDB() {}
+  getEmployeesFromDB() {
+    return this.http
+      .get<EmployeeModel[]>(
+        `${environment.jsonSvURL}${environment.employeesCollection}`
+      )
+      .pipe(
+        tap(employees => {
+          console.log(employees);
+        })
+      );
+  }
 
   // getEmployeeFromDB(id: string) {}
 }

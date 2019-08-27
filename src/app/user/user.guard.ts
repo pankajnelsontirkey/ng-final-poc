@@ -25,12 +25,13 @@ export class UserGuard implements CanActivate, CanActivateChild {
     | boolean
     | UrlTree {
     let currentRole = this.authService.currentUser.role;
-
     if (currentRole === "user") {
       return true;
     } else {
       let homeRoute = this.authService.getHomeRoute(currentRole);
-      return this.router.createUrlTree(["../", homeRoute]);
+      console.log(homeRoute);
+
+      return this.router.createUrlTree([homeRoute]);
     }
   }
 
