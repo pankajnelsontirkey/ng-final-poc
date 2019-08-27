@@ -21,9 +21,14 @@ export class UserDashboardComponent implements OnInit {
 
     this.employeesService.employeesChanged.subscribe(employees => {
       if (employees) {
-        this.employees["first"] = employees.slice(0, 5);
-        this.employees["recent"] = employees.slice(-1, 5);
-        /* .sort((a, b) => {
+        if (employees.length <= 5) {
+          this.employees["first"] = employees;
+          this.employees["recent"] = employees;
+        } else {
+          this.employees["first"] = employees.slice(0, 5);
+          this.employees["recent"] = employees.slice(-1, 5);
+          /* TODO Add sort method for recently added employees */
+          /* .sort((a, b) => {
           if (a > b) {
             return a;
           } else {
@@ -31,6 +36,7 @@ export class UserDashboardComponent implements OnInit {
           }
           }
         */
+        }
       }
     });
   }

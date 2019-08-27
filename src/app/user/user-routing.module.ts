@@ -14,8 +14,8 @@ const UserRoutes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    component: UserDashboardComponent
-    // canActivate: [UserGuard]
+    component: UserDashboardComponent,
+    canActivate: [UserGuard]
   },
   { path: "employees", component: ListEmployeesComponent },
   { path: "employees/add", component: AddEmployeeComponent },

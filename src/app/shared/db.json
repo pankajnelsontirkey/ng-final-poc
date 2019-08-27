@@ -95,9 +95,9 @@
     {
       "_id": "0ed10765-f1ba-40fc-90d7-6836beaedc2b",
       "firstName": "Pankaj ",
-      "lastName": "",
-      "email": "",
-      "employeeCode": "",
+      "lastName": "Tirkey",
+      "email": "pankaj@mail.com",
+      "employeeCode": "V1234",
       "createdAt": 1566907763412,
       "id": 2
     },

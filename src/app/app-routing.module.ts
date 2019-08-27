@@ -16,8 +16,8 @@ const appRoutes: Routes = [
   },
   {
     path: "dashboard",
-    loadChildren: () => import("./user/user.module").then(m => m.UserModule)
-    // canActivate: [AuthGuard]
+    loadChildren: () => import("./user/user.module").then(m => m.UserModule),
+    canActivate: [AuthGuard]
   },
   { path: "not-found", component: NotFoundComponent },
   { path: "**", redirectTo: "not-found" }
