@@ -2,6 +2,12 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { EmployeeModel } from "src/app/shared/models";
 import { EmployeesService } from "../employees.service";
 import { Subscription } from "rxjs";
+import {
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  ActivatedRoute
+} from "@angular/router";
 
 @Component({
   selector: "app-list-employees",
@@ -13,7 +19,11 @@ export class ListEmployeesComponent implements OnInit, OnDestroy {
   employeesSubscription: Subscription;
   searchString: string = "";
 
-  constructor(private employeesService: EmployeesService) {}
+  constructor(
+    private employeesService: EmployeesService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.employeesSubscription = this.employeesService.employeesChanged.subscribe(
@@ -21,6 +31,12 @@ export class ListEmployeesComponent implements OnInit, OnDestroy {
         this.employees = employees;
       }
     );
+  }
+
+  onSelectEmployee(employeeIndex: number) {
+    this.router.navigate([this.employees[employeeIndex]["_id"]], {
+      relativeTo: this.route
+    });
   }
 
   ngOnDestroy() {

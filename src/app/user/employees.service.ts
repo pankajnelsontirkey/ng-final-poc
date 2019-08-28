@@ -14,6 +14,9 @@ export class EmployeesService {
   employees: EmployeeModel[];
   employeesChanged = new BehaviorSubject<EmployeeModel[]>(null);
 
+  selectedEmployee: EmployeeModel;
+  selectedEmployeeChanged = new BehaviorSubject<EmployeeModel>(null);
+
   constructor(private dataStorageService: DataStorageService) {}
 
   /* Add one employee */
@@ -50,22 +53,20 @@ export class EmployeesService {
   }
 
   /* Get employee by id */
-  getEmployee(id: string) {
-    /* this.http
-      .get(`${environment.jsonSvURL}${environment.employeesCollection}`, {
-        params: {
-          id: id
-        }
-      })
-      .subscribe(
-        responseData => {
-          console.log(responseData);
-        },
-        error => {
-          console.log(error);
-        }
-      ); */
+  getEmployeeById(id: string) {
+    this.dataStorageService.getEmployeeById(id).subscribe(
+      employeeById => {
+        this.selectedEmployee = employeeById;
+        this.selectedEmployeeChanged.next(this.selectedEmployee);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
-  /* Method to get  */
+  /* Update employee by id */
+  editEmployee(id: string) {
+    // this.dataStorageService.
+  }
 }

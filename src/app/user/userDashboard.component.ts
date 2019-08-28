@@ -27,8 +27,8 @@ export class UserDashboardComponent implements OnInit {
         } else {
           this.employees["first"] = employees.slice(0, 5);
           this.employees["recent"] = employees
-            .slice(-5)
             /* Sort descending by createdAt value */
+            .slice(-5)
             .sort((a, b) => b.createdAt - a.createdAt);
         }
       }

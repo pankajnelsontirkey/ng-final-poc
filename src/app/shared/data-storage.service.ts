@@ -99,5 +99,23 @@ export class DataStorageService {
     );
   }
 
-  // getEmployeeFromDB(id: string) {}
+  getEmployeeById(id: string) {
+    return this.http
+      .get<EmployeeModel[]>(
+        `${environment.jsonSvURL}${environment.employeesCollection}`
+      )
+      .pipe(
+        map(employees => {
+          return <EmployeeModel>employees.find(employee => employee._id === id);
+        })
+      );
+  }
+
+  /* Update employee */
+  updateEmployee(id: string) {
+    return this.http.put(
+      `${environment.jsonSvURL}${environment.employeesCollection}`,
+      {}
+    );
+  }
 }

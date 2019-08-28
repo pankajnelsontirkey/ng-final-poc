@@ -47,10 +47,10 @@ export class AddUsersComponent implements OnInit {
     if (this.addUserForm.valid) {
       let user: UserModel = {
         _id: uuid(),
-        firstName: this.addUserForm.get("firstName").value,
-        lastName: this.addUserForm.get("lastName").value,
+        firstName: this.addUserForm.get("firstName").value.trim(),
+        lastName: this.addUserForm.get("lastName").value.trim(),
         email: this.addUserForm.get("email").value,
-        password: this.addUserForm.get("password").value,
+        password: this.addUserForm.get("password").value.trim(),
         role: this.addUserForm.get("role").value
       };
       this.usersService.saveUser(user);

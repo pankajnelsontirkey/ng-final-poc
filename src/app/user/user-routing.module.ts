@@ -2,13 +2,11 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 import { UserDashboardComponent } from "./userDashboard.component";
-import { AuthGuard } from "../auth/auth.guard";
 import { UserGuard } from "./user.guard";
 import { ListEmployeesComponent } from "./list-employees/list-employees.component";
 import { AddEmployeeComponent } from "./list-employees/add-employees/add-employee.component";
 import { EditEmployeeComponent } from "./list-employees/edit-employee/edit-employee.component";
-import { DetailEmployeeComponent } from "./detail-employee/detail-employee.component";
-import { SummaryComponent } from "./summary/summary.component";
+import { DetailEmployeeComponent } from "./list-employees/detail-employee/detail-employee.component";
 
 const UserRoutes: Routes = [
   {

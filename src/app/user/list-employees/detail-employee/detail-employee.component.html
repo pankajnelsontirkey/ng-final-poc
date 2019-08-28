@@ -1,0 +1,15 @@
+<div class="container">
+  <h3>Employee Details</h3>
+  <hr />
+  <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+    <p *ngIf="!employee">No such employee exists</p>
+    <div *ngIf="employee" class="employeeBox">
+      <p>Employee Code: {{ employee.employeeCode }}</p>
+      <p>First Name: {{ employee.firstName }}</p>
+      <p>Last Name: {{ employee.lastName }}</p>
+      <p>Email: {{ employee.email }}</p>
+      <!-- <div> Joined: {{ employee.createdAt }} </div> -->
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="onClickEdit()">Edit</button>
+</div>

@@ -47,10 +47,16 @@
         <!-- Employee list items -->
         <div class="col-xs-12 list-group">
           <div
-            *ngFor="let employee of employees | textFilter: searchString"
+            *ngFor="
+              let employee of employees | textFilter: searchString;
+              let employeeIndex = index
+            "
             class="row list-group-item"
           >
-            <app-list-item [employee]="employee"></app-list-item>
+            <app-list-item
+              [employee]="employee"
+              (click)="onSelectEmployee(employeeIndex)"
+            ></app-list-item>
           </div>
         </div>
       </div>
