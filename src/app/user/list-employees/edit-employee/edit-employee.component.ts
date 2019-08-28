@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { EmployeesService } from "../../employees.service";
 import { EmployeeModel } from "src/app/shared/models";
@@ -17,7 +17,8 @@ export class EditEmployeeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private employeesService: EmployeesService
+    private employeesService: EmployeesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -40,7 +41,22 @@ export class EditEmployeeComponent implements OnInit {
       employeeCode: new FormControl(this.employee.employeeCode, [
         Validators.required
       ]),
-      firstName: new FormControl(this.employee.firstName)
+      firstName: new FormControl(this.employee.firstName, [
+        Validators.required
+      ]),
+      lastName: new FormControl(this.employee.lastName, [Validators.required]),
+      email: new FormControl(this.employee.email, [
+        Validators.required,
+        Validators.email
+      ])
     });
+  }
+
+  onSubmit() {
+    console.log(this.editEmployeeForm.value, this.editEmployeeForm.valid);
+  }
+
+  onCancel() {
+    this.router.navigate(["../"], { relativeTo: this.route });
   }
 }

@@ -47,6 +47,10 @@ export class DetailEmployeeComponent implements OnInit, OnDestroy {
     this.router.navigate(["edit"], { relativeTo: this.route });
   }
 
+  onCancel() {
+    this.router.navigate(["../"], { relativeTo: this.route });
+  }
+
   ngOnDestroy() {
     this.employeeSubscription.unsubscribe();
   }
