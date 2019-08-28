@@ -1,12 +1,10 @@
 <div class="container">
-  <ul class="list-group"></ul>
   <div class="row">
     <div class="col-md-3 list-group-item">First Name</div>
     <div class="col-md-3 list-group-item">Last Name</div>
     <div class="col-md-3 list-group-item">Email</div>
     <div class="col-md-3 list-group-item">Role</div>
   </div>
-  <hr />
   <div class="row" *ngFor="let user of users">
     <div class="col-md-3 list-group-item">{{ user.firstName }}</div>
     <div class="col-md-3 list-group-item">{{ user.lastName }}</div>

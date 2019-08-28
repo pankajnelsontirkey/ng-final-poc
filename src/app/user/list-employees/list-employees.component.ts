@@ -11,6 +11,7 @@ import { Subscription } from "rxjs";
 export class ListEmployeesComponent implements OnInit, OnDestroy {
   employees: EmployeeModel[] = [];
   employeesSubscription: Subscription;
+  searchString: string = "";
 
   constructor(private employeesService: EmployeesService) {}
 

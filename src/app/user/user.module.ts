@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 import { UserDashboardComponent } from "./userDashboard.component";
 import { ListEmployeesComponent } from "./list-employees/list-employees.component";
@@ -11,6 +11,8 @@ import { DetailEmployeeComponent } from "./detail-employee/detail-employee.compo
 import { UserRoutingModule } from "./user-routing.module";
 import { EmployeesService } from "./employees.service";
 import { SummaryComponent } from "./summary/summary.component";
+import { ListItemComponent } from "./list-employees/list-item/list-item.component";
+import { TextFilterPipe } from "./list-employees/text-filter.pipe";
 
 @NgModule({
   declarations: [
@@ -19,9 +21,17 @@ import { SummaryComponent } from "./summary/summary.component";
     AddEmployeeComponent,
     EditEmployeeComponent,
     DetailEmployeeComponent,
-    SummaryComponent
+    SummaryComponent,
+    ListItemComponent,
+    TextFilterPipe
   ],
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, UserRoutingModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UserRoutingModule
+  ],
   providers: [EmployeesService],
   bootstrap: [UserDashboardComponent]
 })

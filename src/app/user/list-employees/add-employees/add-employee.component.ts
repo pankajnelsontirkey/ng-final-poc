@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AddUserModel, EmployeeModel } from "src/app/shared/models";
 import { EmployeesService } from "../../employees.service";
+import { Router } from "@angular/router";
+import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
   selector: "app-add-employee",
@@ -10,7 +12,11 @@ import { EmployeesService } from "../../employees.service";
 })
 export class AddEmployeeComponent implements OnInit {
   addEmployeeForm: FormGroup;
-  constructor(private employeeService: EmployeesService) {}
+  constructor(
+    private employeeService: EmployeesService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -30,6 +36,8 @@ export class AddEmployeeComponent implements OnInit {
 
   onSubmit() {
     this.employeeService.saveEmployee(this.addEmployeeForm.value);
+    let nextRoute = this.authService.getHomeRoute("role");
+    this.router.navigate([nextRoute]);
   }
 
   emailValidator(control: FormControl) {

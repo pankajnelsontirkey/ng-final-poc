@@ -4,7 +4,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthGuard } from "./auth/auth.guard";
 import { LoginComponent } from "./auth/login/login.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
-import { ListEmployeesComponent } from "./user/list-employees/list-employees.component";
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },

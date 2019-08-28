@@ -1,17 +1,59 @@
 <div class="container">
   <h4>Employees List</h4>
-  <div class="row">
-    <div class="col-xs-12">
-      <a routerLink="/dashboard/employees/add">Add Employee</a>
+  <hr />
+
+  <div class="col-xs-12 ">
+    <!-- Search box & addEmployees button -->
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <input
+            type="text"
+            name="filter"
+            id="filter"
+            placeholder="Search Text"
+            class="form-control"
+            style="text-align: center;"
+            [(ngModel)]="searchString"
+          />
+        </div>
+        <div class="col-md-6">
+          <a
+            routerLink="/dashboard/employees/add"
+            class="btn btn-primary float-right"
+          >
+            Add Employee
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-12">
-      <ul class="list-group">
-        <li *ngFor="let employee of employees" class="list-group-item">
-          {{ employee.firstName }}
-          {{ employee.lastName }}
-          {{ employee.email }}
-        </li>
-      </ul>
+    <br />
+    <!-- Employee List -->
+    <div class="list-group">
+      <!-- Employee List Headers -->
+      <div>
+        <div class="row">
+          <div class="col-md-4">
+            Employee Code
+          </div>
+          <div class="col-md-4">
+            Full Name
+          </div>
+          <div class="col-md-4">
+            Email
+          </div>
+        </div>
+        <hr />
+        <!-- Employee list items -->
+        <div class="col-xs-12 list-group">
+          <div
+            *ngFor="let employee of employees | textFilter: searchString"
+            class="row list-group-item"
+          >
+            <app-list-item [employee]="employee"></app-list-item>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
