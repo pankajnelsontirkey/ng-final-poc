@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 
 import { AuthService } from "../auth/auth.service";
-import { Subscription } from "rxjs";
-import { Router } from "@angular/router";
+import { Subscription, BehaviorSubject } from "rxjs";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-header",
@@ -10,23 +10,37 @@ import { Router } from "@angular/router";
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  public collapsed: boolean = true;
   currentUserName: string = "";
   currentRole: string = null;
-  isLoggedIn: boolean = false;
-  subscription: Subscription;
+  userSubscription: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  currentPage: string = "";
+
+  isLoggedIn: boolean = false;
+  collapsed: boolean = true;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.authService.currentUserChanged.subscribe(currentUser => {
-      if (currentUser) {
-        this.currentUserName = currentUser.fullName;
-        this.currentRole = currentUser.role;
-        this.isLoggedIn = true;
-      } else {
-        this.isLoggedIn = false;
+    this.userSubscription = this.authService.currentUserChanged.subscribe(
+      currentUser => {
+        if (currentUser) {
+          this.currentUserName = currentUser.fullName;
+          this.currentRole = currentUser.role;
+          this.isLoggedIn = true;
+        } else {
+          this.isLoggedIn = false;
+          this.currentRole = null;
+        }
       }
+    );
+
+    this.authService.currentPageChanged.subscribe(path => {
+      this.currentPage = path;
     });
   }
 
@@ -42,6 +56,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 }

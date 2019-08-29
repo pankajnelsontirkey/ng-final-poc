@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 
 import { UserModel, LoginModel, CurrentUserModel } from "../shared/models";
@@ -9,6 +9,9 @@ import { DataStorageService } from "../shared/data-storage.service";
 export class AuthService {
   currentUser: CurrentUserModel;
   currentUserChanged = new BehaviorSubject<CurrentUserModel>(null);
+
+  currentPage: string = "";
+  currentPageChanged = new BehaviorSubject<string>(null);
 
   constructor(
     private dataStorageService: DataStorageService,
@@ -56,6 +59,26 @@ export class AuthService {
   /* Auto Logout after expiration time */
   // autoLogout() {}
 
+  getHomeRoute(role: string) {
+    switch (role) {
+      case "admin":
+        return "/admin";
+      case "user":
+        return "/dashboard";
+      default:
+        return "/login";
+    }
+  }
+
+  redirectFromAuth(route: string) {
+    this.router.navigate([route]);
+  }
+
+  setCurrentRoute(path: any) {
+    this.currentPage = path;
+    this.currentPageChanged.next(this.currentPage);
+  }
+
   private checkEmailPassword(users: UserModel[], loginData: LoginModel) {
     for (let user of users) {
       if (user["email"] === loginData["email"]) {
@@ -91,20 +114,5 @@ export class AuthService {
     };
 
     localStorage.setItem("currentUser", JSON.stringify(localUser));
-  }
-
-  getHomeRoute(role: string) {
-    switch (role) {
-      case "admin":
-        return "/admin";
-      case "user":
-        return "/dashboard";
-      default:
-        return "/login";
-    }
-  }
-
-  redirectFromAuth(route: string) {
-    this.router.navigate([route]);
   }
 }

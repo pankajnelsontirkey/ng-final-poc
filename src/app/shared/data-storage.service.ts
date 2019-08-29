@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map, tap } from "rxjs/operators";
 
-import { UserModel, EmployeeModel, UserItem } from "./models";
+import { UserModel, EmployeeModel, UserItem, EmployeeForm } from "./models";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -112,10 +112,10 @@ export class DataStorageService {
   }
 
   /* Update employee */
-  updateEmployee(id: string) {
+  updateEmployee(_id: string, employeeData: EmployeeForm) {
     return this.http.put(
-      `${environment.jsonSvURL}${environment.employeesCollection}`,
-      {}
+      `${environment.jsonSvURL}${environment.employeesCollection}?_id=${_id}`,
+      employeeData
     );
   }
 }

@@ -30,12 +30,19 @@ export interface LocalUserModel {
   expirationTimer: number;
 }
 
-export interface EmployeeModel {
-  _id: string;
+export interface EmployeeForm {
+  employeeCode: string;
   firstName: string;
   lastName: string;
   email: string;
+}
+
+export interface EmployeeModel {
+  _id: string;
   employeeCode: string;
+  firstName: string;
+  lastName: string;
+  email: string;
   createdAt: number;
 }
 

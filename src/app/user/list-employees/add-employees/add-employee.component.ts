@@ -40,6 +40,10 @@ export class AddEmployeeComponent implements OnInit {
     this.router.navigate([nextRoute]);
   }
 
+  onCancel() {
+    this.router.navigate(["../"]);
+  }
+
   emailValidator(control: FormControl) {
     const emailPattern = /^\w+@\w+\.\w{2,3}$/;
     if (!emailPattern.test(control.value)) {

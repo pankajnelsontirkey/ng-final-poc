@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { v4 as uuid } from "uuid";
 
-import { EmployeeModel } from "../shared/models";
+import { EmployeeModel, EmployeeForm } from "../shared/models";
 import { environment } from "src/environments/environment";
 import { BehaviorSubject } from "rxjs";
 import { DataStorageService } from "../shared/data-storage.service";
@@ -66,7 +66,14 @@ export class EmployeesService {
   }
 
   /* Update employee by id */
-  editEmployee(id: string) {
-    // this.dataStorageService.
+  updateEmployee(_id: string, employeeData: EmployeeForm) {
+    this.dataStorageService.updateEmployee(_id, employeeData).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

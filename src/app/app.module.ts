@@ -11,6 +11,7 @@ import { NotFoundComponent } from "./not-found/not-found.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { AdminModule } from "./admin/admin.module";
 import { UserModule } from "./user/user.module";
+import { PathStringFilterPipe } from './shared/path-string-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UserModule } from "./user/user.module";
     HeaderComponent,
     FooterComponent,
     NotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    PathStringFilterPipe
   ],
   imports: [
     BrowserModule,

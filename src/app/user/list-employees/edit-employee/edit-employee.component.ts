@@ -25,7 +25,6 @@ export class EditEmployeeComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = params["id"];
       this.editMode = params["id"] != null;
-      console.log(this.id, this.editMode);
     });
 
     this.employeesService.selectedEmployeeChanged.subscribe(
@@ -53,7 +52,11 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editEmployeeForm.value, this.editEmployeeForm.valid);
+    // console.log(this.editEmployeeForm.value);
+    // console.log(this.employee);
+    let employeeData = { ...this.editEmployeeForm.value };
+    console.log(employeeData);
+    this.employeesService.updateEmployee(this.employee._id, employeeData);
   }
 
   onCancel() {

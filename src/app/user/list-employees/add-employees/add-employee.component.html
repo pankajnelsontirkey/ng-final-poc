@@ -38,7 +38,14 @@
             class="form-control"
           />
         </div>
-        <button class="btn btn-primary">Add</button>
+        <button class="btn btn-primary" type="submit">Add</button>
+        <button
+          class="btn btn-danger float-right"
+          type="button"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
       </form>
     </div>
   </div>
