@@ -1,7 +1,9 @@
 <div class="backdrop" (click)="onClose()"></div>
 
 <div class="addUserModal">
-  <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+  <div
+    class="col-xs-12 col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 formContainer"
+  >
     <!-- TODO: Below text should be moved to currentPage propert on header -->
     <h4>Add User</h4>
 
@@ -14,7 +16,17 @@
           id="firstName"
           formControlName="firstName"
           class="form-control"
+          required
         />
+        <span
+          class="help-text alert-danger"
+          *ngIf="
+            addUserForm.get('firstName').touched &&
+            !addUserForm.get('firstName').valid
+          "
+        >
+          First Name is required!
+        </span>
       </div>
 
       <!-- Last Name -->
@@ -26,6 +38,15 @@
           formControlName="lastName"
           class="form-control"
         />
+        <span
+          class="help-text alert-danger"
+          *ngIf="
+            addUserForm.get('lastName').touched &&
+            !addUserForm.get('lastName').valid
+          "
+        >
+          Last Name is required!
+        </span>
       </div>
 
       <!-- Email -->
@@ -37,6 +58,14 @@
           formControlName="email"
           class="form-control"
         />
+        <span
+          class="help-text alert-danger"
+          *ngIf="
+            addUserForm.get('email').touched && !addUserForm.get('email').valid
+          "
+        >
+          Invalid email!
+        </span>
       </div>
 
       <!-- Password -->
@@ -48,6 +77,15 @@
           formControlName="password"
           class="form-control"
         />
+        <span
+          class="help-text alert-danger"
+          *ngIf="
+            addUserForm.get('password').touched &&
+            !addUserForm.get('password').valid
+          "
+        >
+          Invalid email!
+        </span>
       </div>
 
       <!-- Confirm Password -->
@@ -59,23 +97,15 @@
           formControlName="cpassword"
           class="form-control"
         />
-        <!-- <span
-          class="form-text alert alert-danger"
+        <span
+          class="help-text alert-danger"
           *ngIf="
             addUserForm.get('cpassword').touched &&
-            !addUserForm.get('cpassword').value
+            !addUserForm.get('cpassword').valid
           "
         >
-          Required
-          <span
-            *ngIf="
-              addUserForm.get('cpassword').value &&
-              !addUserForm.get('cpassword').valid
-            "
-          >
-            Invalid confirm password
-          </span>
-        </span> -->
+          Invalid password/Passwords do not match!
+        </span>
       </div>
 
       <!-- Role -->
