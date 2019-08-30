@@ -1,24 +1,24 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import { UserDashboardComponent } from "./userDashboard.component";
-import { UserGuard } from "./user.guard";
-import { ListEmployeesComponent } from "./list-employees/list-employees.component";
-import { AddEmployeeComponent } from "./list-employees/add-employees/add-employee.component";
-import { EditEmployeeComponent } from "./list-employees/edit-employee/edit-employee.component";
-import { DetailEmployeeComponent } from "./list-employees/detail-employee/detail-employee.component";
+import { UserDashboardComponent } from './userDashboard.component';
+import { UserGuard } from './user.guard';
+import { ListEmployeesComponent } from './list-employees/list-employees.component';
+import { AddEmployeeComponent } from './list-employees/add-employees/add-employee.component';
+import { EditEmployeeComponent } from './list-employees/edit-employee/edit-employee.component';
+import { DetailEmployeeComponent } from './list-employees/detail-employee/detail-employee.component';
 
 const UserRoutes: Routes = [
   {
-    path: "",
-    pathMatch: "full",
+    path: '',
+    pathMatch: 'full',
     component: UserDashboardComponent,
     canActivate: [UserGuard]
   },
-  { path: "employees", component: ListEmployeesComponent },
-  { path: "employees/add", component: AddEmployeeComponent },
-  { path: "employees/:id", component: DetailEmployeeComponent },
-  { path: "employees/:id/edit", component: EditEmployeeComponent }
+  { path: 'employees', component: ListEmployeesComponent },
+  { path: 'employees/add', component: AddEmployeeComponent },
+  { path: 'employees/:id', component: DetailEmployeeComponent },
+  { path: 'employees/:id/edit', component: EditEmployeeComponent }
 ];
 
 @NgModule({

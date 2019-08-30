@@ -26,6 +26,7 @@ export class AuthService {
         if (!userVerified['error']) {
           this.handleAuthentication(<UserModel>userVerified);
         } else {
+          return { error: 'Invalid credentials!' };
         }
       },
       error => {

@@ -1,20 +1,20 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { AuthService } from "../auth/auth.service";
-import { Subscription, BehaviorSubject } from "rxjs";
-import { Router, ActivatedRoute } from "@angular/router";
+import { AuthService } from '../auth/auth.service';
+import { Subscription, BehaviorSubject } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: "app-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.scss"]
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  currentUserName: string = "";
+  currentUserName: string = '';
   currentRole: string = null;
   userSubscription: Subscription;
 
-  currentPage: string = "";
+  currentPage: string = '';
 
   isLoggedIn: boolean = false;
   collapsed: boolean = true;

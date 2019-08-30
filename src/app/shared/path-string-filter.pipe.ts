@@ -1,7 +1,7 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: "pathStringFilter"
+  name: 'pathStringFilter'
 })
 export class PathStringFilterPipe implements PipeTransform {
   transform(value: string): string {
@@ -9,8 +9,8 @@ export class PathStringFilterPipe implements PipeTransform {
       return;
     }
     return value
-      .split("/")
-      .join(" ")
+      .split('/')
+      .join(' ')
       .toUpperCase();
   }
 }

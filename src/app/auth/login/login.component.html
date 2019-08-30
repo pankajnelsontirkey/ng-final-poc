@@ -18,7 +18,10 @@
           #email="ngModel"
           class="form-control"
         />
-        <span class="form-text alert alert-danger" *ngIf="email.touched && !email.valid">
+        <span
+          class="form-text alert alert-danger"
+          *ngIf="email.touched && !email.valid"
+        >
           Email is required.
         </span>
       </div>
@@ -35,7 +38,10 @@
           #password="ngModel"
           class="form-control"
         />
-        <span class="form-text alert alert-danger" *ngIf="password.touched && !password.valid">
+        <span
+          class="form-text alert alert-danger"
+          *ngIf="password.touched && !password.valid"
+        >
           Password is invalid
         </span>
       </div>

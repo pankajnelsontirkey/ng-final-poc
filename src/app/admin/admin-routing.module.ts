@@ -1,13 +1,13 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import { AdminGuard } from "./admin.guard";
-import { AdminDashboardComponent } from "./adminDashboard.component";
+import { AdminGuard } from './admin.guard';
+import { AdminDashboardComponent } from './adminDashboard.component';
 
 const AdminRoutes: Routes = [
   {
-    path: "",
-    pathMatch: "full",
+    path: '',
+    pathMatch: 'full',
     component: AdminDashboardComponent,
     canActivate: [AdminGuard]
   }

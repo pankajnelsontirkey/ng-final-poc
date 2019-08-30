@@ -1,8 +1,8 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { EmployeeModel } from "src/app/shared/models";
+import { Pipe, PipeTransform } from '@angular/core';
+import { EmployeeModel } from 'src/app/shared/models';
 
 @Pipe({
-  name: "textFilter"
+  name: 'textFilter'
 })
 export class TextFilterPipe implements PipeTransform {
   transform(value: EmployeeModel[], searchString: string): any {

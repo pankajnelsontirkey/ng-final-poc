@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
-import { UsersService } from "./users.service";
+import { UsersService } from './users.service';
 
 @Component({
-  selector: "app-admin",
-  templateUrl: "./adminDashboard.component.html",
-  styleUrls: ["./adminDashboard.component.scss"]
+  selector: 'app-admin',
+  templateUrl: './adminDashboard.component.html',
+  styleUrls: ['./adminDashboard.component.scss']
 })
 export class AdminDashboardComponent implements OnInit {
   showAddUser: boolean = false;

@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { AddUserModel, EmployeeModel } from "src/app/shared/models";
-import { EmployeesService } from "../../employees.service";
-import { Router } from "@angular/router";
-import { AuthService } from "src/app/auth/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AddUserModel, EmployeeModel } from 'src/app/shared/models';
+import { EmployeesService } from '../../employees.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
-  selector: "app-add-employee",
-  templateUrl: "./add-employee.component.html",
-  styleUrls: ["./add-employee.component.scss"]
+  selector: 'app-add-employee',
+  templateUrl: './add-employee.component.html',
+  styleUrls: ['./add-employee.component.scss']
 })
 export class AddEmployeeComponent implements OnInit {
   addEmployeeForm: FormGroup;
@@ -36,18 +36,18 @@ export class AddEmployeeComponent implements OnInit {
 
   onSubmit() {
     this.employeeService.saveEmployee(this.addEmployeeForm.value);
-    let nextRoute = this.authService.getHomeRoute("role");
+    let nextRoute = this.authService.getHomeRoute('role');
     this.router.navigate([nextRoute]);
   }
 
   onCancel() {
-    this.router.navigate(["../"]);
+    this.router.navigate(['../']);
   }
 
   emailValidator(control: FormControl) {
     const emailPattern = /^\w+@\w+\.\w{2,3}$/;
     if (!emailPattern.test(control.value)) {
-      return { error: "Enter a valid email. example@domain.com" };
+      return { error: 'Enter a valid email. example@domain.com' };
     }
     return null;
   }
