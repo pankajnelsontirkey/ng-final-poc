@@ -106,6 +106,3 @@ typings/
 
 # requirements file
 requirements.md
-
-#environment.ts file with api keys
-environments/
