@@ -1,15 +1,10 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { v4 as uuid } from "uuid";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
-import { EmployeeModel, EmployeeForm } from "../shared/models";
-import { environment } from "src/environments/environment";
-import { BehaviorSubject } from "rxjs";
-import { DataStorageService } from "../shared/data-storage.service";
+import { EmployeeModel, EmployeeForm } from '../shared/models';
+import { DataStorageService } from '../shared/data-storage.service';
 
-@Injectable({
-  providedIn: "root"
-})
+@Injectable({ providedIn: 'root' })
 export class EmployeesService {
   employees: EmployeeModel[];
   employeesChanged = new BehaviorSubject<EmployeeModel[]>(null);
@@ -23,7 +18,6 @@ export class EmployeesService {
   saveEmployee(employeeForm) {
     /* Create Employee model object */
     let newEmployee: EmployeeModel = {
-      _id: uuid(),
       firstName: employeeForm.firstName,
       lastName: employeeForm.lastName,
       email: employeeForm.email,
@@ -66,14 +60,7 @@ export class EmployeesService {
   }
 
   /* Update employee by id */
-  updateEmployee(_id: string, employeeData: EmployeeForm) {
-    this.dataStorageService.updateEmployee(_id, employeeData).subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+  updateEmployee(id: string, employeeData: EmployeeForm) {
+    return this.dataStorageService.updateEmployee(id, employeeData);
   }
 }

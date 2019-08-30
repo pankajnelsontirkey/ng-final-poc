@@ -1,5 +1,5 @@
 export interface UserItem {
-  _id: string;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -7,7 +7,7 @@ export interface UserItem {
 }
 
 export interface UserModel {
-  _id: string;
+  _id?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -17,7 +17,7 @@ export interface UserModel {
 }
 
 export interface CurrentUserModel {
-  _id: string;
+  id: string;
   fullName: string;
   email: string;
   role: string;
@@ -25,7 +25,7 @@ export interface CurrentUserModel {
 }
 
 export interface LocalUserModel {
-  _id: string;
+  id: string;
   fullName: string;
   expirationTimer: number;
 }
@@ -38,7 +38,7 @@ export interface EmployeeForm {
 }
 
 export interface EmployeeModel {
-  _id: string;
+  _id?: string;
   employeeCode: string;
   firstName: string;
   lastName: string;

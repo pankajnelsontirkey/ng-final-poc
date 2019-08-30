@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
-import { UserModel, LoginModel, CurrentUserModel } from "../shared/models";
-import { DataStorageService } from "../shared/data-storage.service";
+import { UserModel, LoginModel, CurrentUserModel } from '../shared/models';
+import { DataStorageService } from '../shared/data-storage.service';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   currentUser: CurrentUserModel;
   currentUserChanged = new BehaviorSubject<CurrentUserModel>(null);
 
-  currentPage: string = "";
+  currentPage: string = '';
   currentPageChanged = new BehaviorSubject<string>(null);
 
   constructor(
@@ -21,34 +21,34 @@ export class AuthService {
   login(loginData: LoginModel) {
     this.dataStorageService.getUsersForAuth().subscribe(
       users => {
+        // console.log(users);
         let userVerified = this.checkEmailPassword(users, loginData);
-
-        if (!userVerified["error"]) {
+        if (!userVerified['error']) {
           this.handleAuthentication(<UserModel>userVerified);
         } else {
         }
       },
       error => {
-        console.log("error", error);
+        console.log('error', error);
       }
     );
   }
 
   logout() {
-    localStorage.removeItem("currentUser");
+    localStorage.removeItem('currentUser');
     this.currentUserChanged.next(null);
-    this.router.navigate(["/login"]);
+    this.router.navigate(['/login']);
   }
 
   autoLogin() {
-    let localUser = JSON.parse(localStorage.getItem("currentUser"));
+    let localUser = JSON.parse(localStorage.getItem('currentUser'));
 
     if (!localUser) {
       return;
     }
 
     this.dataStorageService
-      .getUserRoleByUid(localUser["_id"])
+      .getUserRoleByUid(localUser['id'])
       .subscribe(role => {
         this.currentUser = { ...localUser, role };
         this.currentUserChanged.next(this.currentUser);
@@ -61,12 +61,12 @@ export class AuthService {
 
   getHomeRoute(role: string) {
     switch (role) {
-      case "admin":
-        return "/admin";
-      case "user":
-        return "/dashboard";
+      case 'admin':
+        return '/admin';
+      case 'user':
+        return '/dashboard';
       default:
-        return "/login";
+        return '/login';
     }
   }
 
@@ -81,13 +81,13 @@ export class AuthService {
 
   private checkEmailPassword(users: UserModel[], loginData: LoginModel) {
     for (let user of users) {
-      if (user["email"] === loginData["email"]) {
-        if (user["password"] === loginData["password"]) {
+      if (user['email'] === loginData['email']) {
+        if (user['password'] === loginData['password']) {
           return user;
         }
       }
     }
-    return { error: "Email/Password is incorrect" };
+    return { error: 'Email/Password is incorrect' };
   }
 
   private handleAuthentication(user: UserModel) {
@@ -95,8 +95,8 @@ export class AuthService {
     /** currentUser will be kept in authService; has role which can be called for role-based access */
 
     let currentUser: CurrentUserModel = {
-      _id: user._id,
-      fullName: user.firstName + " " + user.lastName,
+      id: user._id,
+      fullName: user.firstName + ' ' + user.lastName,
       email: user.email,
       role: user.role,
       expirationTimer: expirationTimer
@@ -107,12 +107,12 @@ export class AuthService {
 
     /** localUser for storing in localStorage; should not hold 'role' property */
     let localUser = {
-      _id: this.currentUser._id,
+      id: this.currentUser.id,
       email: this.currentUser.email,
       fullName: this.currentUser.fullName,
       expirationTimer: this.currentUser.expirationTimer
     };
 
-    localStorage.setItem("currentUser", JSON.stringify(localUser));
+    localStorage.setItem('currentUser', JSON.stringify(localUser));
   }
 }

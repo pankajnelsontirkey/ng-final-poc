@@ -13,10 +13,13 @@ export class DataStorageService {
 
   /* Only to be used by authService */
   getUsersForAuth() {
-    return this.http
-      .get<UserModel[]>(`${environment.jsonSvURL}${environment.usersCollection}`)
-      .pipe(
+    return this.http.get<UserModel[]>(
+      `${environment.restApiUrl}${environment.usersCollection}`
+    );
+    /* .pipe(
         map(responseData => {
+          console.log(responseData);
+
           return <UserModel[]>responseData.map(user => ({
             _id: user._id,
             firstName: user.firstName,
@@ -26,13 +29,15 @@ export class DataStorageService {
             role: user.role
           }));
         })
-      );
+      ); */
   }
 
   /* Only to be used by authService */
   getUserRoleByUid(_id: string) {
     return this.http
-      .get<UserModel[]>(`${environment.jsonSvURL}${environment.usersCollection}`)
+      .get<UserModel[]>(
+        `${environment.restApiUrl}${environment.usersCollection}`
+      )
       .pipe(map(users => users.find(user => user._id === _id).role));
     /* pipe the response; use map to Observable value, only return role since other details for currentUser are already available from localstorage in authService. */
   }
@@ -42,19 +47,10 @@ export class DataStorageService {
    * Only to be used by admin role
    */
   addUserToDB(user: UserModel) {
-    return this.http
-      .post<UserModel>(`${environment.jsonSvURL}${environment.usersCollection}`, user)
-      .pipe(
-        map(responseData => {
-          return <UserItem>{
-            _id: responseData._id,
-            firstName: responseData.firstName,
-            lastName: responseData.lastName,
-            email: responseData.email,
-            role: responseData.role
-          };
-        })
-      );
+    return this.http.post<UserModel>(
+      `${environment.restApiUrl}${environment.usersCollection}`,
+      user
+    );
   }
 
   /**
@@ -63,11 +59,13 @@ export class DataStorageService {
    */
   getUsersFromDB() {
     return this.http
-      .get<UserModel[]>(`${environment.jsonSvURL}${environment.usersCollection}`)
+      .get<UserModel[]>(
+        `${environment.restApiUrl}${environment.usersCollection}`
+      )
       .pipe(
         map(responseData => {
           return <UserItem[]>responseData.map(user => ({
-            _id: user._id,
+            id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
@@ -78,12 +76,8 @@ export class DataStorageService {
   }
 
   addEmployeeToDB(newEmployee: EmployeeModel) {
-    /* return this.http.post<EmployeeModel>(
-      `${environment.jsonSvURL}${environment.employeesCollection}`,
-      newEmployee
-    ); */
     return this.http.post<EmployeeModel>(
-      `${environment.restApiUrl}${environment.restApiUrl}`,
+      `${environment.restApiUrl}${environment.employeesCollection}`,
       newEmployee
     );
   }
@@ -95,19 +89,15 @@ export class DataStorageService {
   }
 
   getEmployeeById(id: string) {
-    return this.http
-      .get<EmployeeModel[]>(`${environment.jsonSvURL}${environment.employeesCollection}`)
-      .pipe(
-        map(employees => {
-          return <EmployeeModel>employees.find(employee => employee._id === id);
-        })
-      );
+    return this.http.get<EmployeeModel>(
+      `${environment.restApiUrl}${environment.employeesCollection}/${id}`
+    );
   }
 
   /* Update employee */
-  updateEmployee(_id: string, employeeData: EmployeeForm) {
-    return this.http.put(
-      `${environment.jsonSvURL}${environment.employeesCollection}?_id=${_id}`,
+  updateEmployee(id: string, employeeData: EmployeeForm) {
+    return this.http.put<EmployeeModel>(
+      `${environment.restApiUrl}${environment.employeesCollection}/${id}`,
       employeeData
     );
   }

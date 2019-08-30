@@ -1,18 +1,18 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { EmployeesService } from "../../employees.service";
-import { EmployeeModel } from "src/app/shared/models";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { EmployeesService } from '../../employees.service';
+import { EmployeeModel } from 'src/app/shared/models';
 import {
   Router,
   ActivatedRouteSnapshot,
   ActivatedRoute,
   Params
-} from "@angular/router";
-import { Subscription } from "rxjs";
+} from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-detail-employee",
-  templateUrl: "./detail-employee.component.html",
-  styleUrls: ["./detail-employee.component.scss"]
+  selector: 'app-detail-employee',
+  templateUrl: './detail-employee.component.html',
+  styleUrls: ['./detail-employee.component.scss']
 })
 export class DetailEmployeeComponent implements OnInit, OnDestroy {
   employee: EmployeeModel;
@@ -28,7 +28,7 @@ export class DetailEmployeeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.employeeId = params["id"];
+      this.employeeId = params['id'];
     });
     /* getEmployeeById needs to be called in a routeResolver */
     this.employeesService.getEmployeeById(this.employeeId);
@@ -44,11 +44,11 @@ export class DetailEmployeeComponent implements OnInit, OnDestroy {
   }
 
   onClickEdit() {
-    this.router.navigate(["edit"], { relativeTo: this.route });
+    this.router.navigate(['edit'], { relativeTo: this.route });
   }
 
-  onCancel() {
-    this.router.navigate(["../"], { relativeTo: this.route });
+  onGoBack() {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {
