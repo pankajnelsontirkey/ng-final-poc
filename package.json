@@ -10,7 +10,12 @@
     "e2e": "ng e2e",
     "jsonSv": "json-server --watch ./src/app/shared/db.json"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pankajnelsontirkey/ng-final-poc.git"
+  },
+  "author": "Pankaj Nelson Tirkey",
+  "license": "MIT",
   "dependencies": {
     "@angular/animations": "^9.0.0-next.3",
     "@angular/common": "^9.0.0-next.3",
