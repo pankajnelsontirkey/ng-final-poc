@@ -18,7 +18,6 @@ export class UserDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.employeesService.fetchEmployees();
-
     this.employeesService.employeesChanged.subscribe(employees => {
       if (employees) {
         if (employees.length <= 5) {
@@ -28,8 +27,8 @@ export class UserDashboardComponent implements OnInit {
           this.employees['first'] = employees.slice(0, 5);
           this.employees['recent'] = employees
             /* Sort descending by createdAt value */
-            .slice(-5)
-            .sort((a, b) => b.createdAt - a.createdAt);
+            .sort((a, b) => b.createdAt - a.createdAt)
+            .slice(-5);
         }
       }
     });
