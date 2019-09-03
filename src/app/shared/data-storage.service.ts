@@ -16,30 +16,18 @@ export class DataStorageService {
     return this.http.get<UserModel[]>(
       `${environment.restApiUrl}${environment.usersCollection}`
     );
-    /* .pipe(
-        map(responseData => {
-          console.log(responseData);
-
-          return <UserModel[]>responseData.map(user => ({
-            _id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            password: user.password,
-            role: user.role
-          }));
-        })
-      ); */
   }
 
   /* Only to be used by authService */
   getUserRoleByUid(_id: string) {
-    return this.http
-      .get<UserModel[]>(
-        `${environment.restApiUrl}${environment.usersCollection}`
-      )
-      .pipe(map(users => users.find(user => user._id === _id).role));
-    /* pipe the response; use map to Observable value, only return role since other details for currentUser are already available from localstorage in authService. */
+    return (
+      this.http
+        .get<UserModel[]>(
+          `${environment.restApiUrl}${environment.usersCollection}`
+        )
+        /* pipe the response; use map to Observable value, only return role since other details for currentUser are already available from localstorage in authService. */
+        .pipe(map(users => users.find(user => user._id === _id).role))
+    );
   }
 
   /**
